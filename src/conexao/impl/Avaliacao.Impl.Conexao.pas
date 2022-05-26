@@ -3,17 +3,21 @@ unit Avaliacao.Impl.Conexao;
 interface
 
 uses
-  Vcl.Forms, Data.SqlExpr, System.SysUtils,
+  System.SysUtils, FireDAC.Comp.Client, FireDAC.Phys.FBDef, FireDAC.Stan.Def, FireDAC.Stan.Intf, FireDAC.Phys,
+  FireDAC.Phys.IBBase, FireDAC.Phys.FB, FireDAC.UI.Intf, FireDAC.VCLUI.Wait,
+  FireDAC.Comp.UI,
   Avaliacao.Conexao;
 
 type
   TConexao = class(TInterfacedObject, IConexao)
   private
-    FConexao: TSQLConnection;
+    FFDPhysFBDriverLink1: TFDPhysFBDriverLink;
+    FFDGUIxWaitCursor1: TFDGUIxWaitCursor;
 
-    function GetConexao: TSQLConnection;
+    FConexao: TFDConnection;
+
+    function GetConexao: TFDConnection;
     procedure ConfigurarDadosGeraisConexao;
-    procedure ConfigurarAcessoAoBancoDeDados;
     function RetornaCaminhoBanco: string;
   public
     constructor Create;
@@ -26,55 +30,33 @@ implementation
 
 constructor TConexao.Create;
 begin
-  FConexao := TSQLConnection.Create(Application);
+  FConexao := TFDConnection.Create(nil);
+  FFDPhysFBDriverLink1 := TFDPhysFBDriverLink.Create(nil);
+  FFDGUIxWaitCursor1 := TFDGUIxWaitCursor.Create(nil);
 
   ConfigurarDadosGeraisConexao;
-
-  ConfigurarAcessoAoBancoDeDados;
-
 end;
 
 procedure TConexao.ConfigurarDadosGeraisConexao;
 const
   CONNECTION_NAME = 'FBConnection';
-  DRIVER_NAME = 'Firebird';
-  LIBRARY_NAME = 'dbxfb.dll';
-  VENDOR_LIB = 'fbclient.dll';
-  DRIVER_FUNC = 'getSQLDriverINTERBASE';
+  DRIVER_NAME = 'FB';
+  DATABASE_USER_NAME = 'SYSDBA';
+  DATABASE_PASSWORD = 'masterkey';
 begin
-  FConexao := TSQLConnection.Create(Application);
-
   FConexao.ConnectionName := CONNECTION_NAME;
-  FConexao.DriverName := DRIVER_NAME;
-  FConexao.LibraryName := LIBRARY_NAME;
-  FConexao.VendorLib := VENDOR_LIB;
-  FConexao.GetDriverFunc := DRIVER_FUNC;
+  FConexao.Params.DriverID := DRIVER_NAME;
+  FConexao.Params.UserName := DATABASE_USER_NAME;
+  FConexao.Params.Password := DATABASE_PASSWORD;
+  FConexao.Params.DataBase := RetornaCaminhoBanco;
   FConexao.LoginPrompt := False;
-end;
 
-procedure TConexao.ConfigurarAcessoAoBancoDeDados;
-const
-  LOGIN_DATABASE = 'SYSDBA';
-  PASSWORD_DATA_BASE = 'masterkey';
-  MENSAGEM_FALHA_CONEXAO_BANCO = 'Falha ao conectar no banco de dados!';
-begin
-  try
-    FConexao.Connected := False;
-
-    FConexao.Params.Values['DataBase'] := RetornaCaminhoBanco;
-    FConexao.Params.Values['User_Name'] := LOGIN_DATABASE;
-    FConexao.Params.Values['Password'] := PASSWORD_DATA_BASE;
-
-    FConexao.Connected := True;
-  except
-    raise Exception.Create(MENSAGEM_FALHA_CONEXAO_BANCO);
-  end;
-
+  FConexao.Connected := True;
 end;
 
 function TConexao.RetornaCaminhoBanco: string;
 const
-  CAMINHO_RELATIVO_BANCO = 'assets\BANCO_AVALIACAO.FDB';
+  CAMINHO_RELATIVO_BANCO = '\assets\BANCO_AVALIACAO.FDB';
 begin
   Result := GetCurrentDir + CAMINHO_RELATIVO_BANCO;
 end;
@@ -84,7 +66,7 @@ begin
 
 end;
 
-function TConexao.GetConexao: TSQLConnection;
+function TConexao.GetConexao: TFDConnection;
 begin
 
 end;

@@ -3,16 +3,16 @@ unit Avaliacao.Conexao;
 interface
 
 uses
-  Data.SqlExpr;
+  FireDAC.Comp.Client;
 
 type
 
   IConexao = interface
     ['{049CFF04-84D2-4F54-AAF1-B33C14C7F958}']
 
-    function GetConexao: TSQLConnection;
+    function GetConexao: TFDConnection;
 
-    property RetornaConexao: TSQLConnection read GetConexao;
+    property RetornaConexao: TFDConnection read GetConexao;
   end;
 
 implementation
