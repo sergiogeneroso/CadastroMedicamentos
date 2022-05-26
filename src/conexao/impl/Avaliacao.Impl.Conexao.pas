@@ -16,12 +16,16 @@ type
 
     FConexao: TFDConnection;
 
-    function GetConexao: TFDConnection;
-    procedure ConfigurarDadosGeraisConexao;
     function RetornaCaminhoBanco: string;
+
+    function GetConexao: TFDConnection;
+
+    procedure ConfigurarDadosGeraisConexao;
   public
     constructor Create;
     destructor Destroy;
+
+    property RetornaConexao: TFDConnection read GetConexao;
   end;
 
 implementation
@@ -68,7 +72,7 @@ end;
 
 function TConexao.GetConexao: TFDConnection;
 begin
-
+  Result := FConexao;
 end;
 
 end.
