@@ -17,7 +17,10 @@ uses
   Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversas in '..\..\src\cadastros\reacoesAdversas\model\entity\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversas.pas',
   Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversas in '..\..\src\cadastros\reacoesAdversas\model\entity\impl\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversas.pas',
   Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversasRepository in '..\..\src\cadastros\reacoesAdversas\model\repository\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversasRepository.pas',
-  Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversasRepository in '..\..\src\cadastros\reacoesAdversas\model\repository\impl\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversasRepository.pas';
+  Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversasRepository in '..\..\src\cadastros\reacoesAdversas\model\repository\impl\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversasRepository.pas',
+  Avalicacao.Cadastros.ReacoesAdversas.ViewModel.ReacoesAdversasViewModel in '..\..\src\cadastros\reacoesAdversas\viewmodel\Avalicacao.Cadastros.ReacoesAdversas.ViewModel.ReacoesAdversasViewModel.pas',
+  Avalicacao.Cadastros.ReacoesAdversas.ViewModel.Impl.ReacoesAdversasViewModel in '..\..\src\cadastros\reacoesAdversas\viewmodel\impl\Avalicacao.Cadastros.ReacoesAdversas.ViewModel.Impl.ReacoesAdversasViewModel.pas',
+  Avalicacao.Cadastros.ReacoesAdversas.View.ReacoesAdversasView in '..\..\src\cadastros\reacoesAdversas\view\Avalicacao.Cadastros.ReacoesAdversas.View.ReacoesAdversasView.pas' {ReacoesAdversasView};
 
 {$R *.res}
 
@@ -27,5 +30,6 @@ begin
   Application.CreateForm(TFRMPrincipal, FRMPrincipal);
   Application.CreateForm(TFRMCrudBase, FRMCrudBase);
   Application.CreateForm(TFabricanteView, FabricanteView);
+  Application.CreateForm(TReacoesAdversasView, ReacoesAdversasView);
   Application.Run;
 end.

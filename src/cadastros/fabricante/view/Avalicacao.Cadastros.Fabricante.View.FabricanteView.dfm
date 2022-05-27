@@ -3,7 +3,7 @@ object FabricanteView: TFabricanteView
   Top = 0
   Caption = 'Fabricante'
   ClientHeight = 217
-  ClientWidth = 522
+  ClientWidth = 523
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,11 +17,12 @@ object FabricanteView: TFabricanteView
   object PGControl: TPageControl
     Left = 0
     Top = 0
-    Width = 522
+    Width = 523
     Height = 217
     ActivePage = TSGeral
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 522
     object TSGeral: TTabSheet
       Caption = 'Geral'
       object LBCodigo: TLabel

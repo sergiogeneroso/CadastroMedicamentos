@@ -92,9 +92,9 @@ end;
 
 procedure TFabricanteRepository.Cadastrar(const Fabricante: IFabricante);
 const
-  SQL_INSERT = 'INSERT INTO FABRICANTES (ID, NOME) VALUES (:id, :nome);';
+  SQL_INSERT = 'INSERT INTO FABRICANTES (NOME) VALUES (:nome);';
 begin
-  FConexao.Query.ExecSQL(SQL_INSERT, [Fabricante.Codigo, Fabricante.Nome]);
+  FConexao.Query.ExecSQL(SQL_INSERT, [Fabricante.Nome]);
   FConexao.Conexao.Commit;
 end;
 

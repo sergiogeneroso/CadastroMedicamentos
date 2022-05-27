@@ -4,9 +4,9 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls,
 
-  Avaliacao.CrudBase, Vcl.StdCtrls, Vcl.ComCtrls,
+  Avaliacao.CrudBase,
 
   Avalicacao.Cadastros.Fabricante.ViewModel.FabricanteViewModel,
   Avalicacao.Cadastros.Fabricante.ViewModel.Impl.FabricanteViewModel;
@@ -29,8 +29,6 @@ type
 
     procedure AtualizarCompontensVisuais;
     procedure AtualizarEntidade;
-  public
-
   end;
 
 var

@@ -123,6 +123,12 @@
         <DCCReference Include="..\..\src\cadastros\reacoesAdversas\model\entity\impl\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversas.pas"/>
         <DCCReference Include="..\..\src\cadastros\reacoesAdversas\model\repository\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversasRepository.pas"/>
         <DCCReference Include="..\..\src\cadastros\reacoesAdversas\model\repository\impl\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversasRepository.pas"/>
+        <DCCReference Include="..\..\src\cadastros\reacoesAdversas\viewmodel\Avalicacao.Cadastros.ReacoesAdversas.ViewModel.ReacoesAdversasViewModel.pas"/>
+        <DCCReference Include="..\..\src\cadastros\reacoesAdversas\viewmodel\impl\Avalicacao.Cadastros.ReacoesAdversas.ViewModel.Impl.ReacoesAdversasViewModel.pas"/>
+        <DCCReference Include="..\..\src\cadastros\reacoesAdversas\view\Avalicacao.Cadastros.ReacoesAdversas.View.ReacoesAdversasView.pas">
+            <Form>ReacoesAdversasView</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

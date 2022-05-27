@@ -47,24 +47,23 @@ implementation
 
 { TFabricanteViewModel }
 
-procedure TFabricanteViewModel.CarregarRegistro;
-begin
-  FEntity := FFabricanteRepository.RetornarUltimoRegistro;
-
-  if Assigned(FAtualizarComponentesVisuas) then
-    FAtualizarComponentesVisuas;
-end;
-
 constructor TFabricanteViewModel.Create;
 begin
   FFabricanteRepository := TFabricanteRepository.Create;
+
+  CarregarRegistro;
+end;
+
+procedure TFabricanteViewModel.CarregarRegistro;
+begin
 
   FEntity := FFabricanteRepository.RetornarUltimoRegistro;
 
   if not Assigned(FEntity) then
     FEntity := TFabricante.Create;
 
-  CarregarRegistro;
+  if Assigned(FAtualizarComponentesVisuas) then
+    FAtualizarComponentesVisuas;
 end;
 
 function TFabricanteViewModel.GetAtualizarComponentesVisuas: TEventAtualizarComponentesVisuas;
