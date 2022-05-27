@@ -98,8 +98,8 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\..\src\Avaliacao.pas">
-            <Form>frmPrincipal</Form>
+        <DCCReference Include="..\..\src\Avaliacao.Principal.pas">
+            <Form>FRMPrincipal</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\conexao\Avaliacao.Conexao.pas"/>
@@ -108,6 +108,10 @@
         <DCCReference Include="..\..\src\cadastros\fabricante\model\entity\impl\Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.Fabricante.pas"/>
         <DCCReference Include="..\..\src\cadastros\fabricante\model\repository\impl\Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.FabricanteRepository.pas"/>
         <DCCReference Include="..\..\src\cadastros\fabricante\model\repository\Avalicacao.Cadastros.Fabricante.Model.Entity.FabricanteRepository.pas"/>
+        <DCCReference Include="..\..\src\crudBase\Avaliacao.CrudBase.pas">
+            <Form>FRMCrudBase</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -1,4 +1,4 @@
-object frmPrincipal: TfrmPrincipal
+object FRMPrincipal: TFRMPrincipal
   Left = 0
   Top = 0
   Caption = 'Principal'
