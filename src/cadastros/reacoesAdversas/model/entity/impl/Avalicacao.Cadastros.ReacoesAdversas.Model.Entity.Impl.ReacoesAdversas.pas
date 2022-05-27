@@ -10,16 +10,16 @@ type
   TReacoesAdversas = class(TInterfacedObject, IReacoesAdversas)
   private
     FCodigo: Integer;
-    FNome: string;
+    FDescricao: string;
 
     function GetCodigo: Integer;
-    function GetNome: string;
+    function GetDescricao: string;
 
     procedure SetCodigo(const Value: Integer);
-    procedure SetNome(const Value: string);
+    procedure SetDescricao(const Value: string);
   public
     property Codigo: Integer read GetCodigo write SetCodigo;
-    property Nome: string read GetNome write SetNome;
+    property Descricao: string read GetDescricao write SetDescricao;
   end;
 
 implementation
@@ -31,9 +31,9 @@ begin
   Result := FCodigo;
 end;
 
-function TReacoesAdversas.GetNome: string;
+function TReacoesAdversas.GetDescricao: string;
 begin
-  Result := FNome;
+  Result := FDescricao;
 end;
 
 procedure TReacoesAdversas.SetCodigo(const Value: Integer);
@@ -41,9 +41,9 @@ begin
   FCodigo := Value;
 end;
 
-procedure TReacoesAdversas.SetNome(const Value: string);
+procedure TReacoesAdversas.SetDescricao(const Value: string);
 begin
-  FNome := Value;
+  FDescricao := Value;
 end;
 
 end.

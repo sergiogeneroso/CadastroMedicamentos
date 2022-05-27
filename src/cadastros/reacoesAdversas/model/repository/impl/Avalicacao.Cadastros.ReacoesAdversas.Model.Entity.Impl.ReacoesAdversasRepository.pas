@@ -40,9 +40,9 @@ end;
 
 procedure TReacoesAdversasRepository.Atualizar(const ReacoesAdversas: IReacoesAdversas);
 const
-  SQL_UPDATE = 'UPDATE REACOES_ADVERSAS SET NOME = :nome WHERE ID = :id;';
+  SQL_UPDATE = 'UPDATE REACOES_ADVERSAS SET DESCRICAO = :descricao WHERE ID = :id;';
 begin
-  FConexao.Query.ExecSQL(SQL_UPDATE, [ReacoesAdversas.Nome, ReacoesAdversas.Codigo]);
+  FConexao.Query.ExecSQL(SQL_UPDATE, [ReacoesAdversas.Descricao, ReacoesAdversas.Codigo]);
   FConexao.Conexao.Commit;
 end;
 
@@ -58,7 +58,7 @@ function TReacoesAdversasRepository.RetornarPorCodigo(const Codigo: Integer): IR
 const
   SQL_SELECT = 'SELECT * FROM REACOES_ADVERSAS WHERE ID = :id;';
   CAMPO_CODIGO = 0;
-  CAMPO_NOME = 1;
+  CAMPO_DESCRICAO = 1;
 var
   ReacoesAdversas: IReacoesAdversas;
 begin
@@ -70,7 +70,7 @@ begin
   ReacoesAdversas := TReacoesAdversas.Create;
 
   ReacoesAdversas.Codigo := FConexao.Query.Fields[CAMPO_CODIGO].AsInteger;
-  ReacoesAdversas.Nome := FConexao.Query.Fields[CAMPO_NOME].AsString;
+  ReacoesAdversas.Descricao := FConexao.Query.Fields[CAMPO_DESCRICAO].AsString;
 
   Result := ReacoesAdversas;
 end;
@@ -92,9 +92,9 @@ end;
 
 procedure TReacoesAdversasRepository.Cadastrar(const ReacoesAdversas: IReacoesAdversas);
 const
-  SQL_INSERT = 'INSERT INTO REACOES_ADVERSAS (ID, NOME) VALUES (:id, :nome);';
+  SQL_INSERT = 'INSERT INTO REACOES_ADVERSAS (DESCRICAO) VALUES (:descricao);';
 begin
-  FConexao.Query.ExecSQL(SQL_INSERT, [ReacoesAdversas.Codigo, ReacoesAdversas.Nome]);
+  FConexao.Query.ExecSQL(SQL_INSERT, [ReacoesAdversas.Descricao]);
   FConexao.Conexao.Commit;
 end;
 

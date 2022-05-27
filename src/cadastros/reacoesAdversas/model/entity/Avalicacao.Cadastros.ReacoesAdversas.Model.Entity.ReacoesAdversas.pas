@@ -8,13 +8,13 @@ type
     ['{3B7FA634-8E88-4BEC-B025-846EBA08F1F7}']
 
     function GetCodigo: Integer;
-    function GetNome: string;
+    function GetDescricao: string;
 
     procedure SetCodigo(const Value: Integer);
-    procedure SetNome(const Value: string);
+    procedure SetDescricao(const Value: string);
 
     property Codigo: Integer read GetCodigo write SetCodigo;
-    property Nome: string read GetNome write SetNome;
+    property Descricao: string read GetDescricao write SetDescricao;
   end;
 
 implementation
