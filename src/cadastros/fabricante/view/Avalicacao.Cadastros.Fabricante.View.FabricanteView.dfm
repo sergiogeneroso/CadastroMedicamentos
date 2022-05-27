@@ -43,6 +43,7 @@ object FabricanteView: TFabricanteView
         Top = 24
         Width = 49
         Height = 21
+        Enabled = False
         NumbersOnly = True
         ReadOnly = True
         TabOrder = 0

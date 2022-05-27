@@ -119,6 +119,10 @@
         <DCCReference Include="..\..\src\cadastros\fabricante\viewModel\Avalicacao.Cadastros.Fabricante.ViewModel.FabricanteViewModel.pas"/>
         <DCCReference Include="..\..\src\cadastros\fabricante\viewModel\impl\Avalicacao.Cadastros.Fabricante.ViewModel.Impl.FabricanteViewModel.pas"/>
         <DCCReference Include="..\..\src\crudBase\Avaliacao.CrudBase.ModoCrud.pas"/>
+        <DCCReference Include="..\..\src\cadastros\reacoesAdversas\model\entity\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversas.pas"/>
+        <DCCReference Include="..\..\src\cadastros\reacoesAdversas\model\entity\impl\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversas.pas"/>
+        <DCCReference Include="..\..\src\cadastros\reacoesAdversas\model\repository\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversasRepository.pas"/>
+        <DCCReference Include="..\..\src\cadastros\reacoesAdversas\model\repository\impl\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversasRepository.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

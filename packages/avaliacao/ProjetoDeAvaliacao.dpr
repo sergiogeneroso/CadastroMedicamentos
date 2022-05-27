@@ -13,7 +13,11 @@ uses
   Avalicacao.Cadastros.Fabricante.View.FabricanteView in '..\..\src\cadastros\fabricante\view\Avalicacao.Cadastros.Fabricante.View.FabricanteView.pas' {FabricanteView},
   Avalicacao.Cadastros.Fabricante.ViewModel.FabricanteViewModel in '..\..\src\cadastros\fabricante\viewModel\Avalicacao.Cadastros.Fabricante.ViewModel.FabricanteViewModel.pas',
   Avalicacao.Cadastros.Fabricante.ViewModel.Impl.FabricanteViewModel in '..\..\src\cadastros\fabricante\viewModel\impl\Avalicacao.Cadastros.Fabricante.ViewModel.Impl.FabricanteViewModel.pas',
-  Avaliacao.CrudBase.ModoCrud in '..\..\src\crudBase\Avaliacao.CrudBase.ModoCrud.pas';
+  Avaliacao.CrudBase.ModoCrud in '..\..\src\crudBase\Avaliacao.CrudBase.ModoCrud.pas',
+  Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversas in '..\..\src\cadastros\reacoesAdversas\model\entity\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversas.pas',
+  Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversas in '..\..\src\cadastros\reacoesAdversas\model\entity\impl\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversas.pas',
+  Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversasRepository in '..\..\src\cadastros\reacoesAdversas\model\repository\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversasRepository.pas',
+  Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversasRepository in '..\..\src\cadastros\reacoesAdversas\model\repository\impl\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversasRepository.pas';
 
 {$R *.res}
 
