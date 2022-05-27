@@ -26,6 +26,7 @@ type
     procedure Deletar(const Fabricante: IFabricante);
 
     function RetornarPorCodigo(const Codigo: Integer): IFabricante;
+    function RetornarUltimoRegistro: IFabricante;
   end;
 
 implementation
@@ -72,6 +73,21 @@ begin
   Fabricante.Nome := FConexao.Query.Fields[CAMPO_NOME].AsString;
 
   Result := Fabricante;
+end;
+
+function TFabricanteRepository.RetornarUltimoRegistro: IFabricante;
+const
+  NENHUM_REGISTRO = 0;
+  SQL_ID_ULTIMO_REGISTRO = 'SELECT COALESCE(MAX(ID), 0) FROM FABRICANTES;';
+var
+  IdUltimoRegistro: Integer;
+begin
+  IdUltimoRegistro := FConexao.Conexao.ExecSQLScalar(SQL_ID_ULTIMO_REGISTRO);
+
+  if IdUltimoRegistro = NENHUM_REGISTRO then
+    Exit(nil);
+
+  Result := RetornarPorCodigo(IdUltimoRegistro)
 end;
 
 procedure TFabricanteRepository.Cadastrar(const Fabricante: IFabricante);

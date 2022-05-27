@@ -14,6 +14,7 @@ type
     procedure Deletar(const Fabricante: IFabricante);
 
     function RetornarPorCodigo(const Codigo: Integer): IFabricante;
+    function RetornarUltimoRegistro: IFabricante;
   end;
 
 implementation
