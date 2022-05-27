@@ -4,11 +4,11 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls,
+
+  Avaliacao.CrudBase.ModoCrud;
 
 type
-
-  TModoCrud = (Padrao, Insercao, Alteracao);
 
   TFRMCrudBase = class abstract(TForm)
     PNFooter: TPanel;
@@ -69,7 +69,7 @@ end;
 
 procedure TFRMCrudBase.BTNAlterarClick(Sender: TObject);
 begin
-  SetModoCrudAtual(Alteracao);
+  SetModoCrudAtual(TAlteracao);
 
   ConfigurarComponentes;
 end;
@@ -77,14 +77,14 @@ end;
 procedure TFRMCrudBase.BTNCancelarClick(Sender: TObject);
 begin
   CarregarRegistro;
-  SetModoCrudAtual(Padrao);
+  SetModoCrudAtual(TPadrao);
 
   ConfigurarComponentes;
 end;
 
 procedure TFRMCrudBase.BTNNovoClick(Sender: TObject);
 begin
-  SetModoCrudAtual(Insercao);
+  SetModoCrudAtual(TInsercao);
 
   ConfigurarComponentes;
 
@@ -96,8 +96,9 @@ end;
 procedure TFRMCrudBase.BTNSalvarClick(Sender: TObject);
 begin
   SalvarRegistro;
+  CarregarRegistro;
 
-  SetModoCrudAtual(Padrao);
+  SetModoCrudAtual(TPadrao);
 
   ConfigurarComponentes;
 end;
@@ -108,22 +109,22 @@ var
 begin
   ConfigurarBotoesCrud;
 
-  HabilitarComponentes := (FModoCrudAtual <> Padrao);
+  HabilitarComponentes := (FModoCrudAtual <> TPadrao);
 
   HabilitarDesabilitarComponentes(HabilitarComponentes);
 end;
 
 procedure TFRMCrudBase.ConfigurarBotoesCrud;
 begin
-  BTNNovo.Enabled := (FModoCrudAtual = Padrao);
-  BTNAlterar.Enabled := (FModoCrudAtual = Padrao);
-  BTNPrimeiro.Enabled := (FModoCrudAtual = Padrao);
-  BTNAnterior.Enabled := (FModoCrudAtual = Padrao);
-  BTNProximo.Enabled := (FModoCrudAtual = Padrao);
-  BTNUltimo.Enabled := (FModoCrudAtual = Padrao);
+  BTNNovo.Enabled := (FModoCrudAtual = TPadrao);
+  BTNAlterar.Enabled := (FModoCrudAtual = TPadrao);
+  BTNPrimeiro.Enabled := (FModoCrudAtual = TPadrao);
+  BTNAnterior.Enabled := (FModoCrudAtual = TPadrao);
+  BTNProximo.Enabled := (FModoCrudAtual = TPadrao);
+  BTNUltimo.Enabled := (FModoCrudAtual = TPadrao);
 
-  BTNSalvar.Enabled := (FModoCrudAtual <> Padrao);
-  BTNCancelar.Enabled := (FModoCrudAtual <> Padrao);
+  BTNSalvar.Enabled := (FModoCrudAtual <> TPadrao);
+  BTNCancelar.Enabled := (FModoCrudAtual <> TPadrao);
 end;
 
 procedure TFRMCrudBase.FormShow(Sender: TObject);
