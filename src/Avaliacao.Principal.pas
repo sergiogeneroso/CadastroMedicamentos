@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
 
-  Avalicacao.Cadastros.ReacoesAdversas.View.ReacoesAdversasView;
+  Avalicacao.Cadastros.Medicamento.View.MedicamentoView;
 
 type
   TFRMPrincipal = class(TForm)
@@ -27,8 +27,8 @@ implementation
 
 procedure TFRMPrincipal.Button1Click(Sender: TObject);
 begin
-  Application.CreateForm(TReacoesAdversasView, ReacoesAdversasView);
-  ReacoesAdversasView.ShowModal;
+  Application.CreateForm(TMedicamentoView, MedicamentoView);
+  MedicamentoView.ShowModal;
 end;
 
 end.

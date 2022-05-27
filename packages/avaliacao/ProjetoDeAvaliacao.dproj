@@ -129,6 +129,16 @@
             <Form>ReacoesAdversasView</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\..\src\cadastros\medicamentos\model\entity\Avalicacao.Cadastros.Medicamento.Model.Entity.Medicamento.pas"/>
+        <DCCReference Include="..\..\src\cadastros\medicamentos\model\entity\impl\Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.Medicamento.pas"/>
+        <DCCReference Include="..\..\src\cadastros\medicamentos\model\repository\Avalicacao.Cadastros.Medicamento.Model.Entity.MedicamentoRepository.pas"/>
+        <DCCReference Include="..\..\src\cadastros\medicamentos\model\repository\impl\Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.MedicamentoRepository.pas"/>
+        <DCCReference Include="..\..\src\cadastros\medicamentos\viewmodel\Avalicacao.Cadastros.Medicamento.ViewModel.MedicamentoViewModel.pas"/>
+        <DCCReference Include="..\..\src\cadastros\medicamentos\viewmodel\impl\Avalicacao.Cadastros.Medicamento.ViewModel.Impl.MedicamentoViewModel.pas"/>
+        <DCCReference Include="..\..\src\cadastros\medicamentos\view\Avalicacao.Cadastros.Medicamento.View.MedicamentoView.pas">
+            <Form>MedicamentoView</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

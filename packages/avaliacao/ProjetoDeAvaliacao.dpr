@@ -20,7 +20,14 @@ uses
   Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversasRepository in '..\..\src\cadastros\reacoesAdversas\model\repository\impl\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversasRepository.pas',
   Avalicacao.Cadastros.ReacoesAdversas.ViewModel.ReacoesAdversasViewModel in '..\..\src\cadastros\reacoesAdversas\viewmodel\Avalicacao.Cadastros.ReacoesAdversas.ViewModel.ReacoesAdversasViewModel.pas',
   Avalicacao.Cadastros.ReacoesAdversas.ViewModel.Impl.ReacoesAdversasViewModel in '..\..\src\cadastros\reacoesAdversas\viewmodel\impl\Avalicacao.Cadastros.ReacoesAdversas.ViewModel.Impl.ReacoesAdversasViewModel.pas',
-  Avalicacao.Cadastros.ReacoesAdversas.View.ReacoesAdversasView in '..\..\src\cadastros\reacoesAdversas\view\Avalicacao.Cadastros.ReacoesAdversas.View.ReacoesAdversasView.pas' {ReacoesAdversasView};
+  Avalicacao.Cadastros.ReacoesAdversas.View.ReacoesAdversasView in '..\..\src\cadastros\reacoesAdversas\view\Avalicacao.Cadastros.ReacoesAdversas.View.ReacoesAdversasView.pas' {ReacoesAdversasView},
+  Avalicacao.Cadastros.Medicamento.Model.Entity.Medicamento in '..\..\src\cadastros\medicamentos\model\entity\Avalicacao.Cadastros.Medicamento.Model.Entity.Medicamento.pas',
+  Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.Medicamento in '..\..\src\cadastros\medicamentos\model\entity\impl\Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.Medicamento.pas',
+  Avalicacao.Cadastros.Medicamento.Model.Entity.MedicamentoRepository in '..\..\src\cadastros\medicamentos\model\repository\Avalicacao.Cadastros.Medicamento.Model.Entity.MedicamentoRepository.pas',
+  Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.MedicamentoRepository in '..\..\src\cadastros\medicamentos\model\repository\impl\Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.MedicamentoRepository.pas',
+  Avalicacao.Cadastros.Medicamento.ViewModel.MedicamentoViewModel in '..\..\src\cadastros\medicamentos\viewmodel\Avalicacao.Cadastros.Medicamento.ViewModel.MedicamentoViewModel.pas',
+  Avalicacao.Cadastros.Medicamento.ViewModel.Impl.MedicamentoViewModel in '..\..\src\cadastros\medicamentos\viewmodel\impl\Avalicacao.Cadastros.Medicamento.ViewModel.Impl.MedicamentoViewModel.pas',
+  Avalicacao.Cadastros.Medicamento.View.MedicamentoView in '..\..\src\cadastros\medicamentos\view\Avalicacao.Cadastros.Medicamento.View.MedicamentoView.pas' {MedicamentoView};
 
 {$R *.res}
 
@@ -31,5 +38,6 @@ begin
   Application.CreateForm(TFRMCrudBase, FRMCrudBase);
   Application.CreateForm(TFabricanteView, FabricanteView);
   Application.CreateForm(TReacoesAdversasView, ReacoesAdversasView);
+  Application.CreateForm(TMedicamentoView, MedicamentoView);
   Application.Run;
 end.
