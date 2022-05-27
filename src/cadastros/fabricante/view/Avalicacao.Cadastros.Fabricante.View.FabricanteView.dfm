@@ -44,8 +44,8 @@ object FabricanteView: TFabricanteView
         Width = 49
         Height = 21
         NumbersOnly = True
+        ReadOnly = True
         TabOrder = 0
-        OnChange = EDTCodigoChange
       end
       object EDTNome: TEdit
         Left = 88
@@ -53,7 +53,6 @@ object FabricanteView: TFabricanteView
         Width = 249
         Height = 21
         TabOrder = 1
-        OnChange = EDTNomeChange
       end
     end
   end

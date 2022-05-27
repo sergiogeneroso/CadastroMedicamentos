@@ -8,10 +8,8 @@ uses
 
   Avaliacao.CrudBase, Vcl.StdCtrls, Vcl.ComCtrls,
 
-  Avalicacao.Cadastros.Fabricante.Model.Entity.Fabricante,
-  Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.Fabricante,
-  Avalicacao.Cadastros.Fabricante.Model.Entity.FabricanteRepository,
-  Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.FabricanteRepository;
+  Avalicacao.Cadastros.Fabricante.ViewModel.FabricanteViewModel,
+  Avalicacao.Cadastros.Fabricante.ViewModel.Impl.FabricanteViewModel;
 
 type
   TFabricanteView = class(TFRMCrudBase)
@@ -21,18 +19,16 @@ type
     LBNome: TLabel;
     PGControl: TPageControl;
     TSGeral: TTabSheet;
-    procedure EDTCodigoChange(Sender: TObject);
-    procedure EDTNomeChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
-    FFabricante: IFabricante;
-    FFabricanteRepository: IFabricanteRepository;
+    FViewModel: IFabricanteViewModel;
 
     procedure NovoRegistro; override;
     procedure SalvarRegistro; override;
     procedure CarregarRegistro; override;
 
     procedure AtualizarCompontensVisuais;
+    procedure AtualizarEntidade;
   public
 
   end;
@@ -51,45 +47,36 @@ procedure TFabricanteView.FormCreate(Sender: TObject);
 begin
   inherited;
 
-  FFabricanteRepository := TFabricanteRepository.Create;
+  FViewModel := TFabricanteViewModel.Create;
+
+  FViewModel.AtualizarComponentesVisuas := AtualizarCompontensVisuais;
+  FViewModel.AtualizarEntidades := AtualizarEntidade;
 end;
 
 procedure TFabricanteView.AtualizarCompontensVisuais;
 begin
-  EDTCodigo.Text := FFabricante.Codigo.ToString;
-  EDTNome.Text := FFabricante.Nome;
+  EDTCodigo.Text := FViewModel.Codigo.ToString;
+  EDTNome.Text := FViewModel.Nome;
+end;
+
+procedure TFabricanteView.AtualizarEntidade;
+begin
+  FViewModel.Nome := EDTNome.Text;
 end;
 
 procedure TFabricanteView.CarregarRegistro;
 begin
-  FFabricante := FFabricanteRepository.RetornarUltimoRegistro;
-  AtualizarCompontensVisuais;
-end;
-
-procedure TFabricanteView.EDTCodigoChange(Sender: TObject);
-begin
-  if string(EDTCodigo.Text).IsEmpty then
-    Exit;
-
-  FFabricante.Codigo := string(EDTCodigo.Text).ToInteger;
-end;
-
-procedure TFabricanteView.EDTNomeChange(Sender: TObject);
-begin
-  FFabricante.Nome := EDTNome.Text;
+  FViewModel.CarregarRegistro;
 end;
 
 procedure TFabricanteView.NovoRegistro;
 begin
-  FFabricante := TFabricante.Create;
+  FViewModel.NovoRegistro;
 end;
 
 procedure TFabricanteView.SalvarRegistro;
 begin
-  if ModoCrudAtual = Insercao then
-    FFabricanteRepository.Cadastrar(FFabricante)
-  else
-    FFabricanteRepository.Atualizar(FFabricante);
+  FViewModel.SalvarRegistro(ModoCrudAtual);
 end;
 
 end.
