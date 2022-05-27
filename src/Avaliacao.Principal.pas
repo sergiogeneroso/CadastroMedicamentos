@@ -4,11 +4,14 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+
+  Avalicacao.Cadastros.Fabricante.View.FabricanteView, Vcl.StdCtrls;
 
 type
   TFRMPrincipal = class(TForm)
-    procedure FormCreate(Sender: TObject);
+    Button1: TButton;
+    procedure Button1Click(Sender: TObject);
   private
 
   public
@@ -22,9 +25,10 @@ implementation
 
 {$R *.dfm}
 
-procedure TFRMPrincipal.FormCreate(Sender: TObject);
+procedure TFRMPrincipal.Button1Click(Sender: TObject);
 begin
-//
+  Application.CreateForm(TFabricanteView, FabricanteView);
+  FabricanteView.ShowModal;
 end;
 
 end.

@@ -12,6 +12,7 @@ object FRMCrudBase: TFRMCrudBase
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object PNFooter: TPanel
@@ -25,40 +26,76 @@ object FRMCrudBase: TFRMCrudBase
     ExplicitTop = 360
     ExplicitWidth = 185
     object BTNNovo: TButton
-      Left = 432
-      Top = 8
+      AlignWithMargins = True
+      Left = 460
+      Top = 9
       Width = 75
-      Height = 25
+      Height = 23
+      Margins.Left = 0
+      Margins.Top = 8
+      Margins.Right = 8
+      Margins.Bottom = 8
+      Align = alRight
       Caption = 'Novo'
       TabOrder = 0
       OnClick = BTNNovoClick
+      ExplicitLeft = 432
+      ExplicitTop = 8
+      ExplicitHeight = 25
     end
     object BTNAlterar: TButton
-      Left = 520
-      Top = 8
+      AlignWithMargins = True
+      Left = 543
+      Top = 9
       Width = 75
-      Height = 25
+      Height = 23
+      Margins.Left = 0
+      Margins.Top = 8
+      Margins.Right = 8
+      Margins.Bottom = 8
+      Align = alRight
       Caption = 'Alterar'
       TabOrder = 1
       OnClick = BTNAlterarClick
+      ExplicitLeft = 520
+      ExplicitTop = 8
+      ExplicitHeight = 25
     end
     object BTNSalvar: TButton
-      Left = 608
-      Top = 8
+      AlignWithMargins = True
+      Left = 626
+      Top = 9
       Width = 75
-      Height = 25
+      Height = 23
+      Margins.Left = 0
+      Margins.Top = 8
+      Margins.Right = 8
+      Margins.Bottom = 8
+      Align = alRight
       Caption = 'Salvar'
       TabOrder = 2
       OnClick = BTNSalvarClick
+      ExplicitLeft = 608
+      ExplicitTop = 8
+      ExplicitHeight = 25
     end
     object BTNCancelar: TButton
-      Left = 697
-      Top = 8
+      AlignWithMargins = True
+      Left = 709
+      Top = 9
       Width = 75
-      Height = 25
+      Height = 23
+      Margins.Left = 0
+      Margins.Top = 8
+      Margins.Right = 8
+      Margins.Bottom = 8
+      Align = alRight
       Caption = 'Cancelar'
       TabOrder = 3
       OnClick = BTNCancelarClick
+      ExplicitLeft = 697
+      ExplicitTop = 8
+      ExplicitHeight = 25
     end
     object BTNPrimeiro: TButton
       Left = 8

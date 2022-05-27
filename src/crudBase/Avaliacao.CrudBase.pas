@@ -21,6 +21,7 @@ type
     BTNProximo: TButton;
     BTNUltimo: TButton;
 
+    procedure FormCreate(Sender: TObject);
     procedure BTNAlterarClick(Sender: TObject);
     procedure BTNCancelarClick(Sender: TObject);
     procedure BTNNovoClick(Sender: TObject);
@@ -32,7 +33,7 @@ type
 
     procedure LimparCamposDaTela;
   public
-    constructor Create;
+
   end;
 
 var
@@ -43,28 +44,31 @@ implementation
 {$R *.dfm}
 { TFRMCrudBase }
 
+procedure TFRMCrudBase.FormCreate(Sender: TObject);
+begin
+  FModoCrudAtual := Padrao;
+
+  ConfigurarBotoes;
+end;
+
 procedure TFRMCrudBase.ConfigurarBotoes;
 begin
   BTNNovo.Enabled := (FModoCrudAtual = Padrao);
   BTNAlterar.Enabled := (FModoCrudAtual = Padrao);
-  BTNCancelar.Enabled := (FModoCrudAtual = Padrao);
   BTNPrimeiro.Enabled := (FModoCrudAtual = Padrao);
   BTNAnterior.Enabled := (FModoCrudAtual = Padrao);
+  BTNProximo.Enabled := (FModoCrudAtual = Padrao);
   BTNUltimo.Enabled := (FModoCrudAtual = Padrao);
 
   BTNSalvar.Enabled := (FModoCrudAtual <> Padrao);
-  BTNSalvar.Enabled := (FModoCrudAtual <> Padrao);
-end;
-
-constructor TFRMCrudBase.Create;
-begin
-  FModoCrudAtual := Padrao;
+  BTNCancelar.Enabled := (FModoCrudAtual <> Padrao);
 end;
 
 procedure TFRMCrudBase.LimparCamposDaTela;
 const
   VALOR_VAZIO = -1;
 begin
+
   for var I := 0 to Self.ComponentCount - 1 do
   begin
     if Self.Components[I] is TEdit then
