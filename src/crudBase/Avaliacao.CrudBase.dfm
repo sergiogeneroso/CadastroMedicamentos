@@ -13,6 +13,7 @@ object FRMCrudBase: TFRMCrudBase
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object PNFooter: TPanel
@@ -22,9 +23,6 @@ object FRMCrudBase: TFRMCrudBase
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitLeft = 240
-    ExplicitTop = 360
-    ExplicitWidth = 185
     object BTNNovo: TButton
       AlignWithMargins = True
       Left = 460
@@ -39,9 +37,6 @@ object FRMCrudBase: TFRMCrudBase
       Caption = 'Novo'
       TabOrder = 0
       OnClick = BTNNovoClick
-      ExplicitLeft = 432
-      ExplicitTop = 8
-      ExplicitHeight = 25
     end
     object BTNAlterar: TButton
       AlignWithMargins = True
@@ -57,9 +52,6 @@ object FRMCrudBase: TFRMCrudBase
       Caption = 'Alterar'
       TabOrder = 1
       OnClick = BTNAlterarClick
-      ExplicitLeft = 520
-      ExplicitTop = 8
-      ExplicitHeight = 25
     end
     object BTNSalvar: TButton
       AlignWithMargins = True
@@ -75,9 +67,6 @@ object FRMCrudBase: TFRMCrudBase
       Caption = 'Salvar'
       TabOrder = 2
       OnClick = BTNSalvarClick
-      ExplicitLeft = 608
-      ExplicitTop = 8
-      ExplicitHeight = 25
     end
     object BTNCancelar: TButton
       AlignWithMargins = True
@@ -93,9 +82,6 @@ object FRMCrudBase: TFRMCrudBase
       Caption = 'Cancelar'
       TabOrder = 3
       OnClick = BTNCancelarClick
-      ExplicitLeft = 697
-      ExplicitTop = 8
-      ExplicitHeight = 25
     end
     object BTNPrimeiro: TButton
       Left = 8
