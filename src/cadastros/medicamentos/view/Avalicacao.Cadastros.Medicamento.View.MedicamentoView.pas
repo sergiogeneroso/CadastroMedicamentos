@@ -8,6 +8,8 @@ uses
 
   Avaliacao.CrudBase,
 
+  Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.Fabricante,
+
   Avalicacao.Cadastros.Medicamento.ViewModel.MedicamentoViewModel,
   Avalicacao.Cadastros.Medicamento.ViewModel.Impl.MedicamentoViewModel, Vcl.Mask,
   Data.DB, Datasnap.DBClient, Vcl.Grids, Vcl.DBGrids;
@@ -75,9 +77,16 @@ end;
 { TMedicamentoView }
 
 procedure TMedicamentoView.AtualizarCompontensVisuais;
+var
+  Fabricante: TFabricante;
 begin
   if FViewModel.Codigo = 0 then
     Exit;
+
+  CBFabricante.Items.AddObject(EmptyStr, TObject.Create);
+
+  for Fabricante in FViewModel.FabricantesDisponiveis do
+    CBFabricante.Items.AddObject(Fabricante.Nome, TObject(Fabricante));
 
   EDTCodigo.Text := FViewModel.Codigo.ToString;
   EDTNome.Text := FViewModel.Nome;
@@ -86,6 +95,8 @@ begin
   MEDValidade.Text := DateToStr(FViewModel.Validade);
   MEDTelefone.Text := FViewModel.TelefoneSac;
   MEDPreco.Text := FViewModel.Preco.ToString;
+
+  CBFabricante.ItemIndex := FViewModel.RetornarIndiceDoFabricante;
 end;
 
 procedure TMedicamentoView.AtualizarEntidade;
@@ -96,6 +107,8 @@ begin
   FViewModel.Validade := StrToDate(MEDValidade.Text);
   FViewModel.TelefoneSac := MEDTelefone.Text;
   FViewModel.Preco := string(MEDPreco.Text).ToDouble;
+
+  FViewModel.Fabricante := TFabricante(CBFabricante.Items.Objects[CBFabricante.ItemIndex]);
 end;
 
 procedure TMedicamentoView.CarregarRegistro;

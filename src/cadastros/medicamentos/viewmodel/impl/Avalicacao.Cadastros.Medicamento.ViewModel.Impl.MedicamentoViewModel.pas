@@ -8,6 +8,9 @@ uses
   Avaliacao.CrudBase.ModoCrud,
 
   Avalicacao.Cadastros.Fabricante.Model.Entity.Fabricante,
+  Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.Fabricante,
+  Avalicacao.Cadastros.Fabricante.Model.Entity.FabricanteRepository,
+  Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.FabricanteRepository,
 
   Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversas,
 
@@ -22,7 +25,8 @@ type
   TMedicamentoViewModel = class(TInterfacedObject, IMedicamentoViewModel)
   private
     FEntity: IMedicamento;
-    FFabricanteRepository: IMedicamentoRepository;
+    FMedicamentoRepository: IMedicamentoRepository;
+    FFabricanteRepository: IFabricanteRepository;
 
     FAtualizarComponentesVisuas: TEventAtualizarComponentesVisuas;
     FAtualizarEntidades: TEventAtualizarEntidades;
@@ -38,6 +42,7 @@ type
     function GetValidade: TDate;
     function GetAtualizarComponentesVisuas: TEventAtualizarComponentesVisuas;
     function GetAtualizarEntidades: TEventAtualizarEntidades;
+    function GetFabricantesDisponiveis: TList<TFabricante>;
 
     procedure SetCodigo(const Value: Integer);
     procedure SetNome(const Value: string);
@@ -57,6 +62,10 @@ type
     procedure SalvarRegistro(const ModoCrud: TModoCrud);
     procedure CarregarRegistro;
 
+    procedure AtualizarFabricantePorCodigo(const FabricanteCodigo: Integer);
+
+    function RetornarIndiceDoFabricante: Integer;
+
     property Codigo: Integer read GetCodigo write SetCodigo;
     property Fabricante: IFabricante read GetFabricante write SetFabricante;
     property Nome: string read GetNome write SetNome;
@@ -66,6 +75,7 @@ type
     property RegistroAnvisa: string read GetRegistroAnvisa write SetRegistroAnvisa;
     property TelefoneSac: string read GetTelefoneSac write SetTelefoneSac;
     property Validade: TDate read GetValidade write SetValidade;
+    property FabricantesDisponiveis: TList<TFabricante> read GetFabricantesDisponiveis;
 
     property AtualizarComponentesVisuas: TEventAtualizarComponentesVisuas read GetAtualizarComponentesVisuas write SetAtualizarComponentesVisuas;
     property AtualizarEntidades: TEventAtualizarEntidades read GetAtualizarEntidades write SetAtualizarEntidades;
@@ -77,15 +87,27 @@ implementation
 
 constructor TMedicamentoViewModel.Create;
 begin
-  FFabricanteRepository := TMedicamentoRepository.Create;
+  FMedicamentoRepository := TMedicamentoRepository.Create;
+  FFabricanteRepository := TFabricanteRepository.Create;
 
   CarregarRegistro;
+end;
+
+procedure TMedicamentoViewModel.AtualizarFabricantePorCodigo(const FabricanteCodigo: Integer);
+var
+  Fabricante: IFabricante;
+begin
+  if Assigned(FEntity.Fabricante) then
+    if FEntity.Fabricante.Codigo = FabricanteCodigo then
+      Exit;
+
+  FEntity.Fabricante := FFabricanteRepository.RetornarPorCodigo(FabricanteCodigo);
 end;
 
 procedure TMedicamentoViewModel.CarregarRegistro;
 begin
 
-  FEntity := FFabricanteRepository.RetornarUltimoRegistro;
+  FEntity := FMedicamentoRepository.RetornarUltimoRegistro;
 
   if not Assigned(FEntity) then
     FEntity := TMedicamento.Create;
@@ -100,9 +122,9 @@ begin
     FAtualizarEntidades;
 
   if ModoCrud = TInsercao then
-    FFabricanteRepository.Cadastrar(FEntity)
+    FMedicamentoRepository.Cadastrar(FEntity)
   else
-    FFabricanteRepository.Atualizar(FEntity);
+    FMedicamentoRepository.Atualizar(FEntity);
 end;
 
 function TMedicamentoViewModel.GetAtualizarComponentesVisuas: TEventAtualizarComponentesVisuas;
@@ -123,6 +145,11 @@ end;
 function TMedicamentoViewModel.GetFabricante: IFabricante;
 begin
   Result := FEntity.Fabricante;
+end;
+
+function TMedicamentoViewModel.GetFabricantesDisponiveis: TList<TFabricante>;
+begin
+  Result := FFabricanteRepository.RetornarTodos;
 end;
 
 function TMedicamentoViewModel.GetNome: string;
@@ -163,6 +190,28 @@ end;
 procedure TMedicamentoViewModel.NovoRegistro;
 begin
   FEntity := TMedicamento.Create;
+end;
+
+function TMedicamentoViewModel.RetornarIndiceDoFabricante: Integer;
+const
+  INDICE_VAZIO = 0;
+var
+  FabricanteIdice: TDictionary<Integer, Integer>;
+  Fabricante: TFabricante;
+  Indice: Integer;
+begin
+  FabricanteIdice := TDictionary<Integer, Integer>.Create;
+
+  FabricanteIdice.Add(INDICE_VAZIO, INDICE_VAZIO);
+
+  Indice := 1;
+  for Fabricante in FabricantesDisponiveis do
+  begin
+    FabricanteIdice.Add(Fabricante.Codigo, Indice);
+    Inc(Indice);
+  end;
+
+  FabricanteIdice.TryGetValue(FEntity.Fabricante.Codigo, Result);
 end;
 
 procedure TMedicamentoViewModel.SetAtualizarComponentesVisuas(const Value: TEventAtualizarComponentesVisuas);

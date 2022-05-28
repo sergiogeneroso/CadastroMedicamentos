@@ -23,8 +23,6 @@ object MedicamentoView: TMedicamentoView
     ActivePage = TSGeral
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 523
-    ExplicitHeight = 217
     object TSGeral: TTabSheet
       Caption = 'Geral'
       object LBCodigo: TLabel
@@ -143,10 +141,8 @@ object MedicamentoView: TMedicamentoView
         Top = 218
         Width = 246
         Height = 21
-        EditMask = '#####,##'
-        MaxLength = 8
         TabOrder = 5
-        Text = '     ,  '
+        Text = ''
       end
       object EDTQuantiade: TEdit
         Left = 88

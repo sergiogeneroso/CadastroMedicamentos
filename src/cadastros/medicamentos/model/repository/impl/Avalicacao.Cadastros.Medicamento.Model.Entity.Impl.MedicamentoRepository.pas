@@ -11,6 +11,11 @@ uses
   Avalicacao.Cadastros.Medicamento.Model.Entity.Medicamento,
   Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.Medicamento,
 
+  Avalicacao.Cadastros.Fabricante.Model.Entity.Fabricante,
+  Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.Fabricante,
+  Avalicacao.Cadastros.Fabricante.Model.Entity.FabricanteRepository,
+  Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.FabricanteRepository,
+
   Avalicacao.Cadastros.Medicamento.Model.Entity.MedicamentoRepository;
 
 type
@@ -18,6 +23,8 @@ type
   TMedicamentoRepository = class(TInterfacedObject, IMedicamentoRepository)
   private
     FConexao: IConexao;
+    FFabricanteRepository: IFabricanteRepository;
+    function FabricanteDoMedicamento(const FabricanId: Integer): IFabricante;
   public
     constructor Create;
 
@@ -36,13 +43,18 @@ implementation
 constructor TMedicamentoRepository.Create;
 begin
   FConexao := TConexao.GetInstance;
+  FFabricanteRepository := TFabricanteRepository.Create;
 end;
 
 procedure TMedicamentoRepository.Atualizar(const Medicamento: IMedicamento);
 const
   SQL_UPDATE = 'UPDATE MEDICAMENTOS SET NOME = :nome, VALIDADE = :validade, PRECO = :preco, ' + 'QUANTIDADE_COMPRIMIDOS = :quantidade, FABRICANTE_ID = :fabricante, TELEFONE_SAC = :telefone' + ', REGISTRO_ANVISA = :registro_anvisa WHERE ID = :id;';
+var
+  ValidadeParaSQL: string;
 begin
-  FConexao.Query.ExecSQL(SQL_UPDATE, [Medicamento.Nome, DateToStr(Medicamento.Validade).QuotedString, Medicamento.Preco, Medicamento.QuantidadeComprimidos, { Medicamento.Fabricante.Codigo } 1, Medicamento.TelefoneSac, Medicamento.RegistroAnvisa, Medicamento.Codigo]);
+  ValidadeParaSQL := FormatDateTime('yyyy-mm-dd', Medicamento.Validade);
+
+  FConexao.Query.ExecSQL(SQL_UPDATE, [Medicamento.Nome, ValidadeParaSQL, Medicamento.Preco, Medicamento.QuantidadeComprimidos,  Medicamento.Fabricante.Codigo, Medicamento.TelefoneSac, Medicamento.RegistroAnvisa, Medicamento.Codigo]);
   FConexao.Conexao.Commit;
 end;
 
@@ -62,11 +74,13 @@ const
   VALIDADE = 2;
   PRECO = 3;
   QUANTIDADE = 4;
-  FABRICANTE = 5;
+  FABRICANTE_ID = 5;
   TELEFONE = 6;
   REGISTRO_ANVISA = 7;
 var
   Medicamento: IMedicamento;
+  Fabricante: IFabricante;
+  FabricanteId: Integer;
 begin
   FConexao.Query.Open(SQL_SELECT, [Codigo]);
 
@@ -80,11 +94,18 @@ begin
   Medicamento.Validade := FConexao.Query.Fields[VALIDADE].AsDateTime;
   Medicamento.Preco := FConexao.Query.Fields[PRECO].AsFloat;
   Medicamento.QuantidadeComprimidos := FConexao.Query.Fields[QUANTIDADE].AsInteger;
-  // Medicamento.Fabricante := FConexao.Query.Fields[FABRICANTE].AsString;
+  FabricanteId := FConexao.Query.Fields[FABRICANTE_ID].AsInteger;
   Medicamento.TelefoneSac := FConexao.Query.Fields[TELEFONE].AsString;
   Medicamento.RegistroAnvisa := FConexao.Query.Fields[REGISTRO_ANVISA].AsString;
 
+  Medicamento.Fabricante := FabricanteDoMedicamento(FabricanteId);
+
   Result := Medicamento;
+end;
+
+function TMedicamentoRepository.FabricanteDoMedicamento(const FabricanId: Integer): IFabricante;
+begin
+  Result := FFabricanteRepository.RetornarPorCodigo(FabricanId);
 end;
 
 function TMedicamentoRepository.RetornarUltimoRegistro: IMedicamento;
@@ -105,8 +126,12 @@ end;
 procedure TMedicamentoRepository.Cadastrar(const Medicamento: IMedicamento);
 const
   SQL_INSERT = 'INSERT INTO MEDICAMENTOS (NOME, VALIDADE, PRECO, QUANTIDADE_COMPRIMIDOS, FABRICANTE_ID, TELEFONE_SAC, REGISTRO_ANVISA) VALUES (:nome, :validade, :preco, :quantidade, :fabricante, :telefone, :registro_anvisa);';
+var
+  ValidadeParaSQL: string;
 begin
-  FConexao.Query.ExecSQL(SQL_INSERT, [Medicamento.Nome, DateToStr(Medicamento.Validade).QuotedString.Replace('/','.'), Medicamento.Preco, Medicamento.QuantidadeComprimidos, { Medicamento.Fabricante.Codigo } 1, Medicamento.TelefoneSac, Medicamento.RegistroAnvisa]);
+  ValidadeParaSQL := FormatDateTime('yyyy-mm-dd', Medicamento.Validade);
+
+  FConexao.Query.ExecSQL(SQL_INSERT, [Medicamento.Nome, ValidadeParaSQL, Medicamento.Preco, Medicamento.QuantidadeComprimidos,  Medicamento.Fabricante.Codigo, Medicamento.TelefoneSac, Medicamento.RegistroAnvisa]);
   FConexao.Conexao.Commit;
 end;
 
