@@ -62,8 +62,6 @@ type
     procedure SalvarRegistro(const ModoCrud: TModoCrud);
     procedure CarregarRegistro;
 
-    procedure AtualizarFabricantePorCodigo(const FabricanteCodigo: Integer);
-
     function RetornarIndiceDoFabricante: Integer;
 
     property Codigo: Integer read GetCodigo write SetCodigo;
@@ -91,17 +89,6 @@ begin
   FFabricanteRepository := TFabricanteRepository.Create;
 
   CarregarRegistro;
-end;
-
-procedure TMedicamentoViewModel.AtualizarFabricantePorCodigo(const FabricanteCodigo: Integer);
-var
-  Fabricante: IFabricante;
-begin
-  if Assigned(FEntity.Fabricante) then
-    if FEntity.Fabricante.Codigo = FabricanteCodigo then
-      Exit;
-
-  FEntity.Fabricante := FFabricanteRepository.RetornarPorCodigo(FabricanteCodigo);
 end;
 
 procedure TMedicamentoViewModel.CarregarRegistro;
