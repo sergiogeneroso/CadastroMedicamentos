@@ -9,16 +9,42 @@ uses
   Avaliacao.CrudBase,
 
   Avalicacao.Cadastros.Medicamento.ViewModel.MedicamentoViewModel,
-  Avalicacao.Cadastros.Medicamento.ViewModel.Impl.MedicamentoViewModel;
+  Avalicacao.Cadastros.Medicamento.ViewModel.Impl.MedicamentoViewModel, Vcl.Mask,
+  Data.DB, Datasnap.DBClient, Vcl.Grids, Vcl.DBGrids;
 
 type
   TMedicamentoView = class(TFRMCrudBase)
     PGControl: TPageControl;
     TSGeral: TTabSheet;
+
     LBCodigo: TLabel;
     LBNome: TLabel;
+    LBRegistroAnvisa: TLabel;
+    LBValidade: TLabel;
+    LBTelefone: TLabel;
+    LBPreco: TLabel;
+    LBQuantidade: TLabel;
+    LBFabricante: TLabel;
+
+    GBReacoesAdversas: TGroupBox;
+    DSReacoesAdversas: TDataSource;
+
+    DBReacoesAdversas: TDBGrid;
+
+    CDSReacoesAdversas: TClientDataSet;
+    CDSReacoesAdversasCodigo: TIntegerField;
+    CDSReacoesAdversasDescricao: TStringField;
+
     EDTCodigo: TEdit;
     EDTNome: TEdit;
+    EDTQuantiade: TEdit;
+    MEDRegistroAnvisa: TMaskEdit;
+    MEDValidade: TMaskEdit;
+    MEDTelefone: TMaskEdit;
+    MEDPreco: TMaskEdit;
+
+    CBFabricante: TComboBox;
+
     procedure FormCreate(Sender: TObject);
   private
     FViewModel: IMedicamentoViewModel;
@@ -50,13 +76,26 @@ end;
 
 procedure TMedicamentoView.AtualizarCompontensVisuais;
 begin
+  if FViewModel.Codigo = 0 then
+    Exit;
+
   EDTCodigo.Text := FViewModel.Codigo.ToString;
   EDTNome.Text := FViewModel.Nome;
+  EDTQuantiade.Text := FViewModel.QuantidadeComprimidos.ToString;
+  MEDRegistroAnvisa.Text := FViewModel.RegistroAnvisa;
+  MEDValidade.Text := DateToStr(FViewModel.Validade);
+  MEDTelefone.Text := FViewModel.TelefoneSac;
+  MEDPreco.Text := FViewModel.Preco.ToString;
 end;
 
 procedure TMedicamentoView.AtualizarEntidade;
 begin
   FViewModel.Nome := EDTNome.Text;
+  FViewModel.QuantidadeComprimidos := string(EDTQuantiade.Text).ToInteger;
+  FViewModel.RegistroAnvisa := MEDRegistroAnvisa.Text;
+  FViewModel.Validade := StrToDate(MEDValidade.Text);
+  FViewModel.TelefoneSac := MEDTelefone.Text;
+  FViewModel.Preco := string(MEDPreco.Text).ToDouble;
 end;
 
 procedure TMedicamentoView.CarregarRegistro;
