@@ -40,9 +40,9 @@ end;
 
 procedure TMedicamentoRepository.Atualizar(const Medicamento: IMedicamento);
 const
-  SQL_UPDATE = 'UPDATE MEDICAMENTOS SET NOME = :nome WHERE ID = :id;';
+  SQL_UPDATE = 'UPDATE MEDICAMENTOS SET NOME = :nome, VALIDADE = :validade, PRECO = :preco, ' + 'QUANTIDADE_COMPRIMIDOS = :quantidade, FABRICANTE_ID = :fabricante, TELEFONE_SAC = :telefone' + ', REGISTRO_ANVISA = :registro_anvisa WHERE ID = :id;';
 begin
-  FConexao.Query.ExecSQL(SQL_UPDATE, [Medicamento.Nome, Medicamento.Codigo]);
+  FConexao.Query.ExecSQL(SQL_UPDATE, [Medicamento.Nome, DateToStr(Medicamento.Validade).QuotedString, Medicamento.Preco, Medicamento.QuantidadeComprimidos, { Medicamento.Fabricante.Codigo } 1, Medicamento.TelefoneSac, Medicamento.RegistroAnvisa, Medicamento.Codigo]);
   FConexao.Conexao.Commit;
 end;
 
@@ -57,8 +57,14 @@ end;
 function TMedicamentoRepository.RetornarPorCodigo(const Codigo: Integer): IMedicamento;
 const
   SQL_SELECT = 'SELECT * FROM MEDICAMENTOS WHERE ID = :id;';
-  CAMPO_CODIGO = 0;
-  CAMPO_NOME = 1;
+  ID = 0;
+  NOME = 1;
+  VALIDADE = 2;
+  PRECO = 3;
+  QUANTIDADE = 4;
+  FABRICANTE = 5;
+  TELEFONE = 6;
+  REGISTRO_ANVISA = 7;
 var
   Medicamento: IMedicamento;
 begin
@@ -69,8 +75,14 @@ begin
 
   Medicamento := TMedicamento.Create;
 
-  Medicamento.Codigo := FConexao.Query.Fields[CAMPO_CODIGO].AsInteger;
-  Medicamento.Nome := FConexao.Query.Fields[CAMPO_NOME].AsString;
+  Medicamento.Codigo := FConexao.Query.Fields[ID].AsInteger;
+  Medicamento.Nome := FConexao.Query.Fields[NOME].AsString;
+  Medicamento.Validade := FConexao.Query.Fields[VALIDADE].AsDateTime;
+  Medicamento.Preco := FConexao.Query.Fields[PRECO].AsFloat;
+  Medicamento.QuantidadeComprimidos := FConexao.Query.Fields[QUANTIDADE].AsInteger;
+  // Medicamento.Fabricante := FConexao.Query.Fields[FABRICANTE].AsString;
+  Medicamento.TelefoneSac := FConexao.Query.Fields[TELEFONE].AsString;
+  Medicamento.RegistroAnvisa := FConexao.Query.Fields[REGISTRO_ANVISA].AsString;
 
   Result := Medicamento;
 end;
@@ -92,9 +104,9 @@ end;
 
 procedure TMedicamentoRepository.Cadastrar(const Medicamento: IMedicamento);
 const
-  SQL_INSERT = 'INSERT INTO MEDICAMENTOS (NOME) VALUES (:nome);';
+  SQL_INSERT = 'INSERT INTO MEDICAMENTOS (NOME, VALIDADE, PRECO, QUANTIDADE_COMPRIMIDOS, FABRICANTE_ID, TELEFONE_SAC, REGISTRO_ANVISA) VALUES (:nome, :validade, :preco, :quantidade, :fabricante, :telefone, :registro_anvisa);';
 begin
-  FConexao.Query.ExecSQL(SQL_INSERT, [Medicamento.Nome]);
+  FConexao.Query.ExecSQL(SQL_INSERT, [Medicamento.Nome, DateToStr(Medicamento.Validade).QuotedString.Replace('/','.'), Medicamento.Preco, Medicamento.QuantidadeComprimidos, { Medicamento.Fabricante.Codigo } 1, Medicamento.TelefoneSac, Medicamento.RegistroAnvisa]);
   FConexao.Conexao.Commit;
 end;
 
