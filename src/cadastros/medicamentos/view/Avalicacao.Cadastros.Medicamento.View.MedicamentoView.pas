@@ -57,6 +57,7 @@ type
 
     procedure AtualizarCompontensVisuais;
     procedure AtualizarEntidade;
+    procedure AtualizarFabricantes;
   end;
 
 var
@@ -77,16 +78,9 @@ end;
 { TMedicamentoView }
 
 procedure TMedicamentoView.AtualizarCompontensVisuais;
-var
-  Fabricante: TFabricante;
 begin
   if FViewModel.Codigo = 0 then
     Exit;
-
-  CBFabricante.Items.AddObject(EmptyStr, TObject.Create);
-
-  for Fabricante in FViewModel.FabricantesDisponiveis do
-    CBFabricante.Items.AddObject(Fabricante.Nome, TObject(Fabricante));
 
   EDTCodigo.Text := FViewModel.Codigo.ToString;
   EDTNome.Text := FViewModel.Nome;
@@ -95,6 +89,19 @@ begin
   MEDValidade.Text := DateToStr(FViewModel.Validade);
   MEDTelefone.Text := FViewModel.TelefoneSac;
   MEDPreco.Text := FViewModel.Preco.ToString;
+
+  AtualizarFabricantes;
+end;
+
+procedure TMedicamentoView.AtualizarFabricantes;
+var
+  Fabricante: TFabricante;
+begin
+
+  CBFabricante.Items.AddObject(EmptyStr, TObject.Create);
+
+  for Fabricante in FViewModel.FabricantesDisponiveis do
+    CBFabricante.Items.AddObject(Fabricante.Nome, TObject(Fabricante));
 
   CBFabricante.ItemIndex := FViewModel.RetornarIndiceDoFabricante;
 end;
