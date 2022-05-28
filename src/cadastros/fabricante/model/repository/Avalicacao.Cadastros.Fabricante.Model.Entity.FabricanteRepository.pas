@@ -3,7 +3,10 @@ unit Avalicacao.Cadastros.Fabricante.Model.Entity.FabricanteRepository;
 interface
 
 uses
-  Avalicacao.Cadastros.Fabricante.Model.Entity.Fabricante;
+  System.Generics.Collections,
+
+  Avalicacao.Cadastros.Fabricante.Model.Entity.Fabricante,
+  Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.Fabricante;
 
 type
   IFabricanteRepository = interface
@@ -15,6 +18,7 @@ type
 
     function RetornarPorCodigo(const Codigo: Integer): IFabricante;
     function RetornarUltimoRegistro: IFabricante;
+    function RetornarTodos: TList<TFabricante>;
   end;
 
 implementation

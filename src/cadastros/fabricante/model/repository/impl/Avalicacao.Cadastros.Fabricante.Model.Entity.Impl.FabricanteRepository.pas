@@ -3,7 +3,7 @@ unit Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.FabricanteRepository;
 interface
 
 uses
-  System.SysUtils,
+  System.SysUtils, System.Generics.Collections,
 
   Avaliacao.Conexao,
   Avaliacao.Impl.Conexao,
@@ -18,6 +18,8 @@ type
   TFabricanteRepository = class(TInterfacedObject, IFabricanteRepository)
   private
     FConexao: IConexao;
+    function RetornarCodigosFabricantes: TList<Integer>;
+    function RetornarPorCodigoObjectoConcreto(const Codigo: Integer): TFabricante;
   public
     constructor Create;
 
@@ -27,6 +29,7 @@ type
 
     function RetornarPorCodigo(const Codigo: Integer): IFabricante;
     function RetornarUltimoRegistro: IFabricante;
+    function RetornarTodos: TList<TFabricante>;
   end;
 
 implementation
@@ -54,6 +57,41 @@ begin
   FConexao.Conexao.Commit;
 end;
 
+function TFabricanteRepository.RetornarTodos: TList<TFabricante>;
+var
+  Fabricantes: TList<TFabricante>;
+  FabricantesCodigos: TList<Integer>;
+  Codigo: Integer;
+begin
+  Fabricantes := TList<TFabricante>.Create;
+  FabricantesCodigos := RetornarCodigosFabricantes;
+
+  for Codigo in FabricantesCodigos do
+    Fabricantes.Add(RetornarPorCodigoObjectoConcreto(Codigo));
+
+  Result := Fabricantes;
+end;
+
+function TFabricanteRepository.RetornarCodigosFabricantes: TList<Integer>;
+const
+  SQL_FABRICANTES_CODIGO = 'SELECT ID FROM FABRICANTES ORDER BY ID ASC';
+  CODIGO = 0;
+var
+  FabricantesCodigos: TList<Integer>;
+begin
+  FabricantesCodigos := TList<Integer>.Create;
+
+  FConexao.Query.Open(SQL_FABRICANTES_CODIGO);
+
+  while not FConexao.Query.Eof do
+  begin
+    FabricantesCodigos.Add(FConexao.Query.Fields[CODIGO].AsInteger);
+    FConexao.Query.Next;
+  end;
+
+  Result := FabricantesCodigos;
+end;
+
 function TFabricanteRepository.RetornarPorCodigo(const Codigo: Integer): IFabricante;
 const
   SQL_SELECT = 'SELECT * FROM FABRICANTES WHERE ID = :id;';
@@ -61,6 +99,27 @@ const
   CAMPO_NOME = 1;
 var
   Fabricante: IFabricante;
+begin
+  FConexao.Query.Open(SQL_SELECT, [Codigo]);
+
+  if FConexao.Query.IsEmpty then
+    raise Exception.Create('Fabricante não encontrado!');
+
+  Fabricante := TFabricante.Create;
+
+  Fabricante.Codigo := FConexao.Query.Fields[CAMPO_CODIGO].AsInteger;
+  Fabricante.Nome := FConexao.Query.Fields[CAMPO_NOME].AsString;
+
+  Result := Fabricante;
+end;
+
+function TFabricanteRepository.RetornarPorCodigoObjectoConcreto(const Codigo: Integer): TFabricante;
+const
+  SQL_SELECT = 'SELECT * FROM FABRICANTES WHERE ID = :id;';
+  CAMPO_CODIGO = 0;
+  CAMPO_NOME = 1;
+var
+  Fabricante: TFabricante;
 begin
   FConexao.Query.Open(SQL_SELECT, [Codigo]);
 
