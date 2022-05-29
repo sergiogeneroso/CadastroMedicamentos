@@ -192,6 +192,7 @@ object MedicamentoView: TMedicamentoView
             item
               Expanded = False
               FieldName = 'Codigo'
+              ReadOnly = True
               Title.Caption = 'C'#211'DIGO'
               Visible = True
             end

@@ -24,11 +24,12 @@ type
 
     function RetornaIdsReacoesAdversas(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>): string;
     procedure AdicionarReacoesAdversas(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>);
+
+    procedure DeletarReacoesExcluidas(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>);
   public
     constructor Create;
 
-    procedure Cadastrar(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>);
-    procedure DeletarReacoesExcluidas(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>);
+    procedure CadastrarOuAtualizar(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>);
 
     function RetornarReacoesDoMedicamento(const MedicamentoId: Integer): TList<TReacaoMedicamentoItem>;
   end;
@@ -41,26 +42,6 @@ constructor TReacaoMedicamentoItemRepository.Create;
 begin
   FConexao := TConexao.GetInstance;
   FReacoesAdversasRepository := TReacoesAdversasRepository.Create;
-end;
-
-procedure TReacaoMedicamentoItemRepository.DeletarReacoesExcluidas(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>);
-const
-  SQL_DELETE = 'DELETE FROM REACOES_MEDICAMENTOS WHERE ID NOT IN(:ids) AND MEDICAMENTO_ID = :medicamentoId';
-var
-  IdReacoesAdversas: string;
-begin
-  IdReacoesAdversas := RetornaIdsReacoesAdversas(ReacoesMedicamentoItem);
-
-  FConexao.Query.ExecSQL(SQL_DELETE, [IdReacoesAdversas, ReacoesMedicamentoItem.First.MedicamentoId]);
-  FConexao.Conexao.Commit;
-end;
-
-function TReacaoMedicamentoItemRepository.RetornaIdsReacoesAdversas(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>): string;
-var
-  ReacaoMedicamentoItem: TReacaoMedicamentoItem;
-begin
-  for ReacaoMedicamentoItem in ReacoesMedicamentoItem do
-    Result := Result + ', ' + ReacaoMedicamentoItem.Codigo.ToString;
 end;
 
 function TReacaoMedicamentoItemRepository.RetornarReacoesDoMedicamento(const MedicamentoId: Integer): TList<TReacaoMedicamentoItem>;
@@ -105,16 +86,52 @@ begin
     ReacaoMedicamentoItem.ReacaoAdversa := FReacoesAdversasRepository.RetornarPorCodigo(ReacaoMedicamentoItem.ReacaoAdversaId);
 end;
 
-procedure TReacaoMedicamentoItemRepository.Cadastrar(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>);
+procedure TReacaoMedicamentoItemRepository.CadastrarOuAtualizar(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>);
 const
-  SQL_INSERT = 'INSERT INTO REACOES_MEDICAMENTOS (MEDICAMENTO_ID, REACOES_ADVERSAS_ID) VALUES (:medicamentoId, :reacoesAdversasId);';
+  SQL_INSERT = 'INSERT INTO REACOES_MEDICAMENTOS (MEDICAMENTO_ID, REACOES_ADVERSAS_ID) VALUES (:medicamentoId, :reacoesAdversasId) RETURNING (ID);';
+  SQL_UPDATE = 'UPDATE REACOES_MEDICAMENTOS SET MEDICAMENTO_ID = :medicamentoId,  REACOES_ADVERSAS_ID = :reacoesAdversasId WHERE ID = :id;';
+  CODIGO = 0;
 var
   ReacaoMedicamento: TReacaoMedicamentoItem;
-begin // Update or insert por id
+begin
   for ReacaoMedicamento in ReacoesMedicamentoItem do
-    FConexao.Query.ExecSQL(SQL_INSERT, [ReacaoMedicamento.MedicamentoId, ReacaoMedicamento.ReacaoAdversa.Codigo]);
+  begin
+    if ReacaoMedicamento.Codigo = 0 then
+    begin
+      FConexao.Query.Open(SQL_INSERT, [ReacaoMedicamento.MedicamentoId, ReacaoMedicamento.ReacaoAdversa.Codigo]);
+      ReacaoMedicamento.Codigo := FConexao.Query.Fields[CODIGO].AsInteger;
+    end
+    else
+      FConexao.Query.ExecSQL(SQL_UPDATE, [ReacaoMedicamento.MedicamentoId, ReacaoMedicamento.ReacaoAdversa.Codigo, ReacaoMedicamento.Codigo]);
+  end;
 
   FConexao.Conexao.Commit;
+
+  DeletarReacoesExcluidas(ReacoesMedicamentoItem);
+end;
+
+procedure TReacaoMedicamentoItemRepository.DeletarReacoesExcluidas(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>);
+const
+  SQL_DELETE = 'DELETE FROM REACOES_MEDICAMENTOS WHERE ID NOT IN(%s) AND MEDICAMENTO_ID = :medicamentoId';
+var
+  IdReacoesAdversas, Script: string;
+begin
+  IdReacoesAdversas := RetornaIdsReacoesAdversas(ReacoesMedicamentoItem);
+
+  Script := Format(SQL_DELETE, [IdReacoesAdversas]);
+
+  FConexao.Query.ExecSQL(Script, [ReacoesMedicamentoItem.First.MedicamentoId]);
+  FConexao.Conexao.Commit;
+end;
+
+function TReacaoMedicamentoItemRepository.RetornaIdsReacoesAdversas(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>): string;
+var
+  ReacaoMedicamentoItem: TReacaoMedicamentoItem;
+begin
+  for ReacaoMedicamentoItem in ReacoesMedicamentoItem do
+    Result := ReacaoMedicamentoItem.Codigo.ToString + ', ' + Result;
+
+  Result := Result.Remove(Result.Length - 2);
 end;
 
 end.

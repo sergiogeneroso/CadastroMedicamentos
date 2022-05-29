@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Mask, Datasnap.DBClient,
 
   Avaliacao.CrudBase.ModoCrud;
 
@@ -20,8 +20,6 @@ type
     BTNAnterior: TButton;
     BTNProximo: TButton;
     BTNUltimo: TButton;
-
-    procedure FormCreate(Sender: TObject);
     procedure BTNAlterarClick(Sender: TObject);
     procedure BTNCancelarClick(Sender: TObject);
     procedure BTNNovoClick(Sender: TObject);
@@ -45,6 +43,8 @@ type
     procedure SalvarRegistro; virtual; abstract;
     procedure CarregarRegistro; virtual; abstract;
 
+    procedure LimparDataSet; virtual;
+
     property ModoCrudAtual: TModoCrud read GetModoCrudAtual write SetModoCrudAtual;
 
   end;
@@ -56,11 +56,6 @@ implementation
 
 {$R *.dfm}
 { TFRMCrudBase }
-
-procedure TFRMCrudBase.FormCreate(Sender: TObject);
-begin
-  ConfigurarComponentes;
-end;
 
 function TFRMCrudBase.GetModoCrudAtual: TModoCrud;
 begin
@@ -129,6 +124,7 @@ end;
 
 procedure TFRMCrudBase.FormShow(Sender: TObject);
 begin
+  ConfigurarComponentes;
   CarregarRegistro;
 end;
 
@@ -161,10 +157,20 @@ begin
     if Component is TEdit then
       TEdit(Component).Text := EmptyStr;
 
+    if Component is TMaskEdit then
+      TMaskEdit(Component).Text := EmptyStr;
+
     if (Component is TComboBox) then
       TCustomComboBox(Component).ItemIndex := VALOR_VAZIO;
+
   end;
 
+  LimparDataSet;
+end;
+
+procedure TFRMCrudBase.LimparDataSet;
+begin
+  // Implementar na classe base;
 end;
 
 procedure TFRMCrudBase.SetModoCrudAtual(const Value: TModoCrud);

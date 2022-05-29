@@ -35,6 +35,7 @@ type
     FAtualizarComponentesVisuas: TEventAtualizarComponentesVisuas;
     FAtualizarEntidades: TEventAtualizarEntidades;
     FAtualizarReacaoAdversa: TEventAtualizarReacaoAdversa;
+    FAtualizarAtualizarFabricantesDisponiveis: TEventAtualizarFabricantesDisponiveis;
 
     function GetCodigo: Integer;
     function GetNome: string;
@@ -49,6 +50,7 @@ type
     function GetAtualizarEntidades: TEventAtualizarEntidades;
     function GetFabricantesDisponiveis: TList<TFabricante>;
     function GetAtualizarReacaoAdversa: TEventAtualizarEntidades;
+    function GetAtualizarFabricantesDisponiveis: TEventAtualizarFabricantesDisponiveis;
 
     procedure SetCodigo(const Value: Integer);
     procedure SetNome(const Value: string);
@@ -62,6 +64,8 @@ type
     procedure SetTelefoneSac(const Value: string);
     procedure SetValidade(const Value: TDate);
     procedure SetAtualizarReacaoAdversa(const Value: TEventAtualizarEntidades);
+    procedure SetAtualizarFabricantesDisponiveis(const Value: TEventAtualizarFabricantesDisponiveis);
+
     procedure ValidaSeJaEstaAdicionadaALista(const ReacaoAdversaId: Integer);
   public
     constructor Create;
@@ -88,6 +92,7 @@ type
     property AtualizarComponentesVisuas: TEventAtualizarComponentesVisuas read GetAtualizarComponentesVisuas write SetAtualizarComponentesVisuas;
     property AtualizarEntidades: TEventAtualizarEntidades read GetAtualizarEntidades write SetAtualizarEntidades;
     property AtualizarReacaoAdversa: TEventAtualizarEntidades read GetAtualizarReacaoAdversa write SetAtualizarReacaoAdversa;
+    property AtualizarFabricantesDisponiveis: TEventAtualizarFabricantesDisponiveis read GetAtualizarFabricantesDisponiveis write SetAtualizarFabricantesDisponiveis;
   end;
 
 implementation
@@ -163,6 +168,11 @@ begin
   Result := FAtualizarEntidades;
 end;
 
+function TMedicamentoViewModel.GetAtualizarFabricantesDisponiveis: TEventAtualizarFabricantesDisponiveis;
+begin
+  Result := FAtualizarAtualizarFabricantesDisponiveis;
+end;
+
 function TMedicamentoViewModel.GetAtualizarReacaoAdversa: TEventAtualizarEntidades;
 begin
   Result := FAtualizarReacaoAdversa;
@@ -221,16 +231,23 @@ end;
 procedure TMedicamentoViewModel.NovoRegistro;
 begin
   FEntity := TMedicamento.Create;
+
+  if Assigned(FAtualizarAtualizarFabricantesDisponiveis) then
+    FAtualizarAtualizarFabricantesDisponiveis;
 end;
 
 function TMedicamentoViewModel.RetornarIndiceDoFabricante: Integer;
 const
   INDICE_VAZIO = 0;
+  INDICE_NAO_SELECIONADO = -1;
 var
   FabricanteIdice: TDictionary<Integer, Integer>;
   Fabricante: TFabricante;
   Indice: Integer;
 begin
+  if not Assigned(FEntity.Fabricante) then
+    Exit(INDICE_NAO_SELECIONADO);
+
   FabricanteIdice := TDictionary<Integer, Integer>.Create;
 
   FabricanteIdice.Add(INDICE_VAZIO, INDICE_VAZIO);
@@ -253,6 +270,11 @@ end;
 procedure TMedicamentoViewModel.SetAtualizarEntidades(const Value: TEventAtualizarEntidades);
 begin
   FAtualizarEntidades := Value;
+end;
+
+procedure TMedicamentoViewModel.SetAtualizarFabricantesDisponiveis(const Value: TEventAtualizarFabricantesDisponiveis);
+begin
+  FAtualizarAtualizarFabricantesDisponiveis := Value;
 end;
 
 procedure TMedicamentoViewModel.SetAtualizarReacaoAdversa(const Value: TEventAtualizarEntidades);

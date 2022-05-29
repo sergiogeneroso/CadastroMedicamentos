@@ -5,15 +5,14 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.Mask, Data.DB,
-  Datasnap.DBClient, Vcl.Grids, Vcl.DBGrids,
+  Datasnap.DBClient, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons,
 
   Avaliacao.CrudBase,
 
   Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.Fabricante,
   Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.ReacaoMedicamentoItem,
   Avalicacao.Cadastros.Medicamento.ViewModel.MedicamentoViewModel,
-  Avalicacao.Cadastros.Medicamento.ViewModel.Impl.MedicamentoViewModel,
-  Vcl.Buttons;
+  Avalicacao.Cadastros.Medicamento.ViewModel.Impl.MedicamentoViewModel;
 
 type
   TMedicamentoView = class(TFRMCrudBase)
@@ -59,6 +58,7 @@ type
     procedure NovoRegistro; override;
     procedure SalvarRegistro; override;
     procedure CarregarRegistro; override;
+    procedure LimparDataSet; override;
 
     procedure AtualizarCompontensVisuais;
     procedure AtualizarEntidade;
@@ -81,6 +81,7 @@ begin
   FViewModel.AtualizarComponentesVisuas := AtualizarCompontensVisuais;
   FViewModel.AtualizarEntidades := AtualizarEntidade;
   FViewModel.AtualizarReacaoAdversa := AtualizarReacoesAdversas;
+  FViewModel.AtualizarFabricantesDisponiveis := AtualizarFabricantes;
 end;
 
 { TMedicamentoView }
@@ -136,6 +137,9 @@ end;
 
 function TMedicamentoView.JaExisteNoDataSet(const ReacaoAdversaId: Integer): Boolean;
 begin
+  if CDSReacoesAdversas.IsEmpty then
+    Exit(False);
+
   CDSReacoesAdversas.First;
 
   while not CDSReacoesAdversas.Eof do
@@ -147,6 +151,11 @@ begin
   end;
 
   Result := False;
+end;
+
+procedure TMedicamentoView.LimparDataSet;
+begin
+  CDSReacoesAdversas.EmptyDataSet;
 end;
 
 procedure TMedicamentoView.AtualizarEntidade;
