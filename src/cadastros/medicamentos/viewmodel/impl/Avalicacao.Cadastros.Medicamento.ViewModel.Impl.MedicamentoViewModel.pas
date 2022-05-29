@@ -77,6 +77,7 @@ type
     function RetornarIndiceDoFabricante: Integer;
 
     procedure AdicionarReacaoAdversa(const ReacaoAdversaId: Integer);
+    procedure RemoverReacaoAdversa(const ReacaoAdversaId: Integer);
 
     property Codigo: Integer read GetCodigo write SetCodigo;
     property Fabricante: IFabricante read GetFabricante write SetFabricante;
@@ -234,6 +235,19 @@ begin
 
   if Assigned(FAtualizarAtualizarFabricantesDisponiveis) then
     FAtualizarAtualizarFabricantesDisponiveis;
+end;
+
+procedure TMedicamentoViewModel.RemoverReacaoAdversa(const ReacaoAdversaId: Integer);
+var
+  ReacaoMedicamentoItem: TReacaoMedicamentoItem;
+begin
+  for ReacaoMedicamentoItem in FEntity.ReacoesAdversas do
+  begin
+    if ReacaoMedicamentoItem.ReacaoAdversaId <> ReacaoAdversaId then
+      Continue;
+
+    FEntity.ReacoesAdversas.Remove(ReacaoMedicamentoItem);
+  end;
 end;
 
 function TMedicamentoViewModel.RetornarIndiceDoFabricante: Integer;

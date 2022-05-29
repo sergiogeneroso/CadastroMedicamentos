@@ -55,6 +55,7 @@ type
     procedure CarregarRegistro;
 
     procedure AdicionarReacaoAdversa(const ReacaoAdversaId: Integer);
+    procedure RemoverReacaoAdversa(const ReacaoAdversaId: Integer);
 
     function RetornarIndiceDoFabricante: Integer;
 

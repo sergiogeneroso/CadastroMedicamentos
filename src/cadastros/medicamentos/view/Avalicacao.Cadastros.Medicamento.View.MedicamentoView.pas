@@ -51,6 +51,7 @@ type
     BBAdicionarReacaoAdversa: TBitBtn;
 
     procedure BBAdicionarReacaoAdversaClick(Sender: TObject);
+    procedure CDSReacoesAdversasBeforeDelete(DataSet: TDataSet);
     procedure FormCreate(Sender: TObject);
   private
     FViewModel: IMedicamentoViewModel;
@@ -182,6 +183,11 @@ end;
 procedure TMedicamentoView.CarregarRegistro;
 begin
   FViewModel.CarregarRegistro;
+end;
+
+procedure TMedicamentoView.CDSReacoesAdversasBeforeDelete(DataSet: TDataSet);
+begin
+  FViewModel.RemoverReacaoAdversa(CDSReacoesAdversasCodigo.AsInteger);
 end;
 
 procedure TMedicamentoView.NovoRegistro;

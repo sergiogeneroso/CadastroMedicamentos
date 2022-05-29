@@ -233,6 +233,7 @@ object MedicamentoView: TMedicamentoView
     Active = True
     Aggregates = <>
     Params = <>
+    BeforeDelete = CDSReacoesAdversasBeforeDelete
     Left = 428
     Top = 256
     object CDSReacoesAdversasCodigo: TIntegerField
