@@ -7,8 +7,8 @@ uses
 
   Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversas,
   Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversas,
-  Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversasRepository,
-  Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversasRepository,
+  Avalicacao.Cadastros.ReacoesAdversas.Model.Repository.ReacoesAdversasRepository,
+  Avalicacao.Cadastros.ReacoesAdversas.Model.Repository.Impl.ReacoesAdversasRepository,
   Avalicacao.Cadastros.ReacoesAdversas.ViewModel.ReacoesAdversasViewModel;
 
 type

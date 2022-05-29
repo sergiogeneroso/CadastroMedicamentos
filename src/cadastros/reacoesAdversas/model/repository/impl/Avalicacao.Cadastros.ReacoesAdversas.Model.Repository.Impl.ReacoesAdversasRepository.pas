@@ -1,4 +1,4 @@
-unit Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversasRepository;
+unit Avalicacao.Cadastros.ReacoesAdversas.Model.Repository.Impl.ReacoesAdversasRepository;
 
 interface
 
@@ -11,7 +11,7 @@ uses
   Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversas,
   Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversas,
 
-  Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversasRepository;
+  Avalicacao.Cadastros.ReacoesAdversas.Model.Repository.ReacoesAdversasRepository;
 
 type
 

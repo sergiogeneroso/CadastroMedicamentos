@@ -106,8 +106,8 @@
         <DCCReference Include="..\..\src\conexao\impl\Avaliacao.Impl.Conexao.pas"/>
         <DCCReference Include="..\..\src\cadastros\fabricante\model\entity\Avalicacao.Cadastros.Fabricante.Model.Entity.Fabricante.pas"/>
         <DCCReference Include="..\..\src\cadastros\fabricante\model\entity\impl\Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.Fabricante.pas"/>
-        <DCCReference Include="..\..\src\cadastros\fabricante\model\repository\impl\Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.FabricanteRepository.pas"/>
-        <DCCReference Include="..\..\src\cadastros\fabricante\model\repository\Avalicacao.Cadastros.Fabricante.Model.Entity.FabricanteRepository.pas"/>
+        <DCCReference Include="..\..\src\cadastros\fabricante\model\repository\impl\Avalicacao.Cadastros.Fabricante.Model.Repository.Impl.FabricanteRepository.pas"/>
+        <DCCReference Include="..\..\src\cadastros\fabricante\model\repository\Avalicacao.Cadastros.Fabricante.Model.Repository.FabricanteRepository.pas"/>
         <DCCReference Include="..\..\src\crudBase\Avaliacao.CrudBase.pas">
             <Form>FRMCrudBase</Form>
             <FormType>dfm</FormType>
@@ -121,8 +121,8 @@
         <DCCReference Include="..\..\src\crudBase\Avaliacao.CrudBase.ModoCrud.pas"/>
         <DCCReference Include="..\..\src\cadastros\reacoesAdversas\model\entity\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversas.pas"/>
         <DCCReference Include="..\..\src\cadastros\reacoesAdversas\model\entity\impl\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversas.pas"/>
-        <DCCReference Include="..\..\src\cadastros\reacoesAdversas\model\repository\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversasRepository.pas"/>
-        <DCCReference Include="..\..\src\cadastros\reacoesAdversas\model\repository\impl\Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.Impl.ReacoesAdversasRepository.pas"/>
+        <DCCReference Include="..\..\src\cadastros\reacoesAdversas\model\repository\Avalicacao.Cadastros.ReacoesAdversas.Model.Repository.ReacoesAdversasRepository.pas"/>
+        <DCCReference Include="..\..\src\cadastros\reacoesAdversas\model\repository\impl\Avalicacao.Cadastros.ReacoesAdversas.Model.Repository.Impl.ReacoesAdversasRepository.pas"/>
         <DCCReference Include="..\..\src\cadastros\reacoesAdversas\viewmodel\Avalicacao.Cadastros.ReacoesAdversas.ViewModel.ReacoesAdversasViewModel.pas"/>
         <DCCReference Include="..\..\src\cadastros\reacoesAdversas\viewmodel\impl\Avalicacao.Cadastros.ReacoesAdversas.ViewModel.Impl.ReacoesAdversasViewModel.pas"/>
         <DCCReference Include="..\..\src\cadastros\reacoesAdversas\view\Avalicacao.Cadastros.ReacoesAdversas.View.ReacoesAdversasView.pas">
@@ -131,16 +131,17 @@
         </DCCReference>
         <DCCReference Include="..\..\src\cadastros\medicamentos\model\entity\Avalicacao.Cadastros.Medicamento.Model.Entity.Medicamento.pas"/>
         <DCCReference Include="..\..\src\cadastros\medicamentos\model\entity\impl\Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.Medicamento.pas"/>
-        <DCCReference Include="..\..\src\cadastros\medicamentos\model\repository\Avalicacao.Cadastros.Medicamento.Model.Entity.MedicamentoRepository.pas"/>
-        <DCCReference Include="..\..\src\cadastros\medicamentos\model\repository\impl\Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.MedicamentoRepository.pas"/>
+        <DCCReference Include="..\..\src\cadastros\medicamentos\model\repository\Avalicacao.Cadastros.Medicamento.Model.Repository.MedicamentoRepository.pas"/>
+        <DCCReference Include="..\..\src\cadastros\medicamentos\model\repository\impl\Avalicacao.Cadastros.Medicamento.Model.Repository.Impl.MedicamentoRepository.pas"/>
         <DCCReference Include="..\..\src\cadastros\medicamentos\viewmodel\Avalicacao.Cadastros.Medicamento.ViewModel.MedicamentoViewModel.pas"/>
         <DCCReference Include="..\..\src\cadastros\medicamentos\viewmodel\impl\Avalicacao.Cadastros.Medicamento.ViewModel.Impl.MedicamentoViewModel.pas"/>
         <DCCReference Include="..\..\src\cadastros\medicamentos\view\Avalicacao.Cadastros.Medicamento.View.MedicamentoView.pas">
             <Form>MedicamentoView</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\cadastros\medicamentos\model\entity\Avalicacao.Cadastros.Medicamento.Model.Entity.ReacaoAdversaItem.pas"/>
-        <DCCReference Include="..\..\src\cadastros\medicamentos\model\entity\impl\Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.ReacaoAdversaItem.pas"/>
+        <DCCReference Include="..\..\src\cadastros\medicamentos\model\entity\Avalicacao.Cadastros.Medicamento.Model.Entity.ReacaoMedicamentoItem.pas"/>
+        <DCCReference Include="..\..\src\cadastros\medicamentos\model\entity\impl\Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.ReacaoMedicamentoItem.pas"/>
+        <DCCReference Include="..\..\src\cadastros\medicamentos\model\repository\impl\Avalicacao.Cadastros.Medicamento.Model.Repository.Impl.ReacaoMedicamentoItemRepository.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

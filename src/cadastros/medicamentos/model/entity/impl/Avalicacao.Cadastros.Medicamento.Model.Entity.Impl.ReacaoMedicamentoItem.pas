@@ -1,14 +1,14 @@
-unit Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.ReacaoAdversaItem;
+unit Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.ReacaoMedicamentoItem;
 
 interface
 
 uses
 
   Avalicacao.Cadastros.ReacoesAdversas.Model.Entity.ReacoesAdversas,
-  Avalicacao.Cadastros.Medicamento.Model.Entity.ReacaoAdversaItem;
+  Avalicacao.Cadastros.Medicamento.Model.Entity.ReacaoMedicamentoItem;
 
 type
-  TReacaoAdversaItem = class(TInterfacedObject, IReacaoAdversaItem)
+  TReacaoMedicamentoItem = class(TInterfacedObject, IReacaoMedicamentoItem)
   private
     FCodigo: Integer;
     FMedicamentoId: Integer;
@@ -29,34 +29,34 @@ type
 
 implementation
 
-{ TReacaoAdversaItem }
+{ TReacaoMedicamentoItem }
 
-function TReacaoAdversaItem.GetCodigo: Integer;
+function TReacaoMedicamentoItem.GetCodigo: Integer;
 begin
   Result := FCodigo;
 end;
 
-function TReacaoAdversaItem.GetMedicamentoId: Integer;
+function TReacaoMedicamentoItem.GetMedicamentoId: Integer;
 begin
   Result := FMedicamentoId;
 end;
 
-function TReacaoAdversaItem.GetReacaoAdversa: IReacoesAdversas;
+function TReacaoMedicamentoItem.GetReacaoAdversa: IReacoesAdversas;
 begin
   Result := FReacaoAdversa;
 end;
 
-procedure TReacaoAdversaItem.SetCodigo(const Value: Integer);
+procedure TReacaoMedicamentoItem.SetCodigo(const Value: Integer);
 begin
   FCodigo := Value;
 end;
 
-procedure TReacaoAdversaItem.SetMedicamentoId(const Value: Integer);
+procedure TReacaoMedicamentoItem.SetMedicamentoId(const Value: Integer);
 begin
   FMedicamentoId := Value;
 end;
 
-procedure TReacaoAdversaItem.SetReacaoAdversa(const Value: IReacoesAdversas);
+procedure TReacaoMedicamentoItem.SetReacaoAdversa(const Value: IReacoesAdversas);
 begin
   FReacaoAdversa := Value;
 end;

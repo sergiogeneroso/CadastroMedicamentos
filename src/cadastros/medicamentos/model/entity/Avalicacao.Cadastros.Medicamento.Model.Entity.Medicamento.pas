@@ -6,7 +6,7 @@ uses
   System.Generics.Collections,
 
   Avalicacao.Cadastros.Fabricante.Model.Entity.Fabricante,
-  Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.ReacaoAdversaItem;
+  Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.ReacaoMedicamentoItem;
 
 type
 
@@ -18,7 +18,7 @@ type
     function GetNome: string;
     function GetPreco: Double;
     function GetQuantidadeComprimidos: Integer;
-    function GetReacoesAdversas: TList<TReacaoAdversaItem>;
+    function GetReacoesAdversas: TList<TReacaoMedicamentoItem>;
     function GetRegistroAnvisa: string;
     function GetTelefoneSac: string;
     function GetValidade: TDate;
@@ -28,7 +28,7 @@ type
     procedure SetNome(const Value: string);
     procedure SetPreco(const Value: Double);
     procedure SetQuantidadeComprimidos(const Value: Integer);
-    procedure SetReacoesAdversas(const Value: TList<TReacaoAdversaItem>);
+    procedure SetReacoesAdversas(const Value: TList<TReacaoMedicamentoItem>);
     procedure SetRegistroAnvisa(const Value: string);
     procedure SetTelefoneSac(const Value: string);
     procedure SetValidade(const Value: TDate);
@@ -40,7 +40,7 @@ type
     property Nome: string read GetNome write SetNome;
     property Preco: Double read GetPreco write SetPreco;
     property QuantidadeComprimidos: Integer read GetQuantidadeComprimidos write SetQuantidadeComprimidos;
-    property ReacoesAdversas: TList<TReacaoAdversaItem> read GetReacoesAdversas write SetReacoesAdversas;
+    property ReacoesAdversas: TList<TReacaoMedicamentoItem> read GetReacoesAdversas write SetReacoesAdversas;
     property RegistroAnvisa: string read GetRegistroAnvisa write SetRegistroAnvisa;
     property TelefoneSac: string read GetTelefoneSac write SetTelefoneSac;
     property Validade: TDate read GetValidade write SetValidade;

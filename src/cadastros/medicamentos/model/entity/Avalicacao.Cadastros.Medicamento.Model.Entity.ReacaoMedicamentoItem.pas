@@ -1,4 +1,4 @@
-unit Avalicacao.Cadastros.Medicamento.Model.Entity.ReacaoAdversaItem;
+unit Avalicacao.Cadastros.Medicamento.Model.Entity.ReacaoMedicamentoItem;
 
 interface
 
@@ -7,7 +7,7 @@ uses
 
 type
 
-  IReacaoAdversaItem = interface
+  IReacaoMedicamentoItem = interface
     ['{C6A1228C-DA10-4363-9364-979DE7933C90}']
 
     function GetCodigo: Integer;

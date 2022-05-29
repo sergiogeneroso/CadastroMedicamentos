@@ -1,4 +1,4 @@
-unit Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.MedicamentoRepository;
+unit Avalicacao.Cadastros.Medicamento.Model.Repository.Impl.MedicamentoRepository;
 
 interface
 
@@ -13,10 +13,10 @@ uses
 
   Avalicacao.Cadastros.Fabricante.Model.Entity.Fabricante,
   Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.Fabricante,
-  Avalicacao.Cadastros.Fabricante.Model.Entity.FabricanteRepository,
-  Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.FabricanteRepository,
+  Avalicacao.Cadastros.Fabricante.Model.Repository.FabricanteRepository,
+  Avalicacao.Cadastros.Fabricante.Model.Repository.Impl.FabricanteRepository,
 
-  Avalicacao.Cadastros.Medicamento.Model.Entity.MedicamentoRepository;
+  Avalicacao.Cadastros.Medicamento.Model.Repository.MedicamentoRepository;
 
 type
 

@@ -7,8 +7,8 @@ uses
 
   Avalicacao.Cadastros.Fabricante.Model.Entity.Fabricante,
   Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.Fabricante,
-  Avalicacao.Cadastros.Fabricante.Model.Entity.FabricanteRepository,
-  Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.FabricanteRepository,
+  Avalicacao.Cadastros.Fabricante.Model.Repository.FabricanteRepository,
+  Avalicacao.Cadastros.Fabricante.Model.Repository.Impl.FabricanteRepository,
   Avalicacao.Cadastros.Fabricante.ViewModel.FabricanteViewModel;
 
 type

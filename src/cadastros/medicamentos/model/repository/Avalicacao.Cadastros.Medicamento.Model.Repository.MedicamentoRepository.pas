@@ -1,4 +1,4 @@
-unit Avalicacao.Cadastros.Medicamento.Model.Entity.MedicamentoRepository;
+unit Avalicacao.Cadastros.Medicamento.Model.Repository.MedicamentoRepository;
 
 interface
 

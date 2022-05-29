@@ -1,4 +1,4 @@
-unit Avalicacao.Cadastros.Fabricante.Model.Entity.FabricanteRepository;
+unit Avalicacao.Cadastros.Fabricante.Model.Repository.FabricanteRepository;
 
 interface
 
