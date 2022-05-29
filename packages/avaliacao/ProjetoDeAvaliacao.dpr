@@ -30,7 +30,8 @@ uses
   Avalicacao.Cadastros.Medicamento.View.MedicamentoView in '..\..\src\cadastros\medicamentos\view\Avalicacao.Cadastros.Medicamento.View.MedicamentoView.pas' {MedicamentoView},
   Avalicacao.Cadastros.Medicamento.Model.Entity.ReacaoMedicamentoItem in '..\..\src\cadastros\medicamentos\model\entity\Avalicacao.Cadastros.Medicamento.Model.Entity.ReacaoMedicamentoItem.pas',
   Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.ReacaoMedicamentoItem in '..\..\src\cadastros\medicamentos\model\entity\impl\Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.ReacaoMedicamentoItem.pas',
-  Avalicacao.Cadastros.Medicamento.Model.Repository.Impl.ReacaoMedicamentoItemRepository in '..\..\src\cadastros\medicamentos\model\repository\impl\Avalicacao.Cadastros.Medicamento.Model.Repository.Impl.ReacaoMedicamentoItemRepository.pas';
+  Avalicacao.Cadastros.Medicamento.Model.Repository.Impl.ReacaoMedicamentoItemRepository in '..\..\src\cadastros\medicamentos\model\repository\impl\Avalicacao.Cadastros.Medicamento.Model.Repository.Impl.ReacaoMedicamentoItemRepository.pas',
+  Avalicacao.Cadastros.Medicamento.Model.Repository.ReacaoMedicamentoItemRepository in '..\..\src\cadastros\medicamentos\model\repository\Avalicacao.Cadastros.Medicamento.Model.Repository.ReacaoMedicamentoItemRepository.pas';
 
 {$R *.res}
 

@@ -11,11 +11,13 @@ uses
   Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.ReacaoMedicamentoItem,
 
   Avalicacao.Cadastros.ReacoesAdversas.Model.Repository.ReacoesAdversasRepository,
-  Avalicacao.Cadastros.ReacoesAdversas.Model.Repository.Impl.ReacoesAdversasRepository;
+  Avalicacao.Cadastros.ReacoesAdversas.Model.Repository.Impl.ReacoesAdversasRepository,
+
+  Avalicacao.Cadastros.Medicamento.Model.Repository.ReacaoMedicamentoItemRepository;
 
 type
 
-  TReacaoMedicamentoItemRepository = class
+  TReacaoMedicamentoItemRepository = class(TInterfacedObject, IReacaoMedicamentoItemRepository)
   private
     FConexao: IConexao;
     FReacoesAdversasRepository: IReacoesAdversasRepository;
@@ -70,10 +72,11 @@ var
   ReacaoMedicamentoItem: TReacaoMedicamentoItem;
   ReacaoAdversaId: Integer;
 begin
+
   FConexao.Query.Open(SQL_SELECT, [MedicamentoId]);
 
   if FConexao.Query.IsEmpty then
-    raise Exception.Create('Reações adversas não encontrada!');
+    Exit(nil);
 
   Result := TList<TReacaoMedicamentoItem>.Create;
 
@@ -83,11 +86,12 @@ begin
 
     ReacaoMedicamentoItem.Codigo := FConexao.Query.Fields[CODIGO].AsInteger;
     ReacaoMedicamentoItem.MedicamentoId := FConexao.Query.Fields[MEDICAMENTO_ID].AsInteger;
-    ReacaoAdversaId  := FConexao.Query.Fields[REACOES_ADVERSAS_ID].AsInteger;
+    ReacaoAdversaId := FConexao.Query.Fields[REACOES_ADVERSAS_ID].AsInteger;
 
     ReacaoMedicamentoItem.ReacaoAdversa := FReacoesAdversasRepository.RetornarPorCodigo(ReacaoAdversaId);
 
     Result.Add(ReacaoMedicamentoItem);
+    FConexao.Query.Next;
   end;
 end;
 

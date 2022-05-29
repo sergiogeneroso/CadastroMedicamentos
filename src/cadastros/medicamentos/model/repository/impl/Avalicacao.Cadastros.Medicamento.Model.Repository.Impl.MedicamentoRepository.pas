@@ -3,7 +3,7 @@ unit Avalicacao.Cadastros.Medicamento.Model.Repository.Impl.MedicamentoRepositor
 interface
 
 uses
-  System.SysUtils,
+  System.SysUtils, System.Generics.Collections,
 
   Avaliacao.Conexao,
   Avaliacao.Impl.Conexao,
@@ -16,6 +16,11 @@ uses
   Avalicacao.Cadastros.Fabricante.Model.Repository.FabricanteRepository,
   Avalicacao.Cadastros.Fabricante.Model.Repository.Impl.FabricanteRepository,
 
+  Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.ReacaoMedicamentoItem,
+
+  Avalicacao.Cadastros.Medicamento.Model.Repository.ReacaoMedicamentoItemRepository,
+  Avalicacao.Cadastros.Medicamento.Model.Repository.Impl.ReacaoMedicamentoItemRepository,
+
   Avalicacao.Cadastros.Medicamento.Model.Repository.MedicamentoRepository;
 
 type
@@ -24,7 +29,10 @@ type
   private
     FConexao: IConexao;
     FFabricanteRepository: IFabricanteRepository;
+    FReacaoMedicamentoItemRepository: IReacaoMedicamentoItemRepository;
+
     function FabricanteDoMedicamento(const FabricanId: Integer): IFabricante;
+    function ReacoesAdversas(const MedicamentoId: Integer): TList<TReacaoMedicamentoItem>;
   public
     constructor Create;
 
@@ -44,6 +52,7 @@ constructor TMedicamentoRepository.Create;
 begin
   FConexao := TConexao.GetInstance;
   FFabricanteRepository := TFabricanteRepository.Create;
+  FReacaoMedicamentoItemRepository := TReacaoMedicamentoItemRepository.Create;
 end;
 
 procedure TMedicamentoRepository.Atualizar(const Medicamento: IMedicamento);
@@ -54,7 +63,7 @@ var
 begin
   ValidadeParaSQL := FormatDateTime('yyyy-mm-dd', Medicamento.Validade);
 
-  FConexao.Query.ExecSQL(SQL_UPDATE, [Medicamento.Nome, ValidadeParaSQL, Medicamento.Preco, Medicamento.QuantidadeComprimidos,  Medicamento.Fabricante.Codigo, Medicamento.TelefoneSac, Medicamento.RegistroAnvisa, Medicamento.Codigo]);
+  FConexao.Query.ExecSQL(SQL_UPDATE, [Medicamento.Nome, ValidadeParaSQL, Medicamento.Preco, Medicamento.QuantidadeComprimidos, Medicamento.Fabricante.Codigo, Medicamento.TelefoneSac, Medicamento.RegistroAnvisa, Medicamento.Codigo]);
   FConexao.Conexao.Commit;
 end;
 
@@ -100,12 +109,19 @@ begin
 
   Medicamento.Fabricante := FabricanteDoMedicamento(FabricanteId);
 
+  Medicamento.ReacoesAdversas := ReacoesAdversas(Medicamento.Codigo);
+
   Result := Medicamento;
 end;
 
 function TMedicamentoRepository.FabricanteDoMedicamento(const FabricanId: Integer): IFabricante;
 begin
   Result := FFabricanteRepository.RetornarPorCodigo(FabricanId);
+end;
+
+function TMedicamentoRepository.ReacoesAdversas(const MedicamentoId: Integer): TList<TReacaoMedicamentoItem>;
+begin
+  Result := FReacaoMedicamentoItemRepository.RetornarReacoesDoMedicamento(MedicamentoId);
 end;
 
 function TMedicamentoRepository.RetornarUltimoRegistro: IMedicamento;
@@ -131,7 +147,7 @@ var
 begin
   ValidadeParaSQL := FormatDateTime('yyyy-mm-dd', Medicamento.Validade);
 
-  FConexao.Query.ExecSQL(SQL_INSERT, [Medicamento.Nome, ValidadeParaSQL, Medicamento.Preco, Medicamento.QuantidadeComprimidos,  Medicamento.Fabricante.Codigo, Medicamento.TelefoneSac, Medicamento.RegistroAnvisa]);
+  FConexao.Query.ExecSQL(SQL_INSERT, [Medicamento.Nome, ValidadeParaSQL, Medicamento.Preco, Medicamento.QuantidadeComprimidos, Medicamento.Fabricante.Codigo, Medicamento.TelefoneSac, Medicamento.RegistroAnvisa]);
   FConexao.Conexao.Commit;
 end;
 
