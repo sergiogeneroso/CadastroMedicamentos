@@ -15,6 +15,7 @@ uses
 type
   TEventAtualizarComponentesVisuas = procedure of object;
   TEventAtualizarEntidades = procedure of object;
+  TEventAtualizarReacaoAdversa = procedure of object;
 
   IMedicamentoViewModel = interface
     ['{78615659-A35B-4016-99A3-5DF6B0E5D880}']
@@ -31,6 +32,7 @@ type
     function GetAtualizarComponentesVisuas: TEventAtualizarComponentesVisuas;
     function GetAtualizarEntidades: TEventAtualizarEntidades;
     function GetFabricantesDisponiveis: TList<TFabricante>;
+    function GetAtualizarReacaoAdversa: TEventAtualizarEntidades;
 
     procedure SetCodigo(const Value: Integer);
     procedure SetNome(const Value: string);
@@ -43,10 +45,13 @@ type
     procedure SetRegistroAnvisa(const Value: string);
     procedure SetTelefoneSac(const Value: string);
     procedure SetValidade(const Value: TDate);
+    procedure SetAtualizarReacaoAdversa(const Value: TEventAtualizarEntidades);
 
     procedure NovoRegistro;
     procedure SalvarRegistro(const ModoCrud: TModoCrud);
     procedure CarregarRegistro;
+
+    procedure AdicionarReacaoAdversa(const ReacaoAdversaId: Integer);
 
     function RetornarIndiceDoFabricante: Integer;
 
@@ -63,6 +68,7 @@ type
 
     property AtualizarComponentesVisuas: TEventAtualizarComponentesVisuas read GetAtualizarComponentesVisuas write SetAtualizarComponentesVisuas;
     property AtualizarEntidades: TEventAtualizarEntidades read GetAtualizarEntidades write SetAtualizarEntidades;
+    property AtualizarReacaoAdversa: TEventAtualizarEntidades read GetAtualizarReacaoAdversa write SetAtualizarReacaoAdversa;
   end;
 
 implementation

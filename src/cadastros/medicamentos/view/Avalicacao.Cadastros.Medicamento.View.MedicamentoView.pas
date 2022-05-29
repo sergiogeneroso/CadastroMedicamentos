@@ -4,15 +4,16 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.Mask, Data.DB,
+  Datasnap.DBClient, Vcl.Grids, Vcl.DBGrids,
 
   Avaliacao.CrudBase,
 
   Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.Fabricante,
-
+  Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.ReacaoMedicamentoItem,
   Avalicacao.Cadastros.Medicamento.ViewModel.MedicamentoViewModel,
-  Avalicacao.Cadastros.Medicamento.ViewModel.Impl.MedicamentoViewModel, Vcl.Mask,
-  Data.DB, Datasnap.DBClient, Vcl.Grids, Vcl.DBGrids;
+  Avalicacao.Cadastros.Medicamento.ViewModel.Impl.MedicamentoViewModel,
+  Vcl.Buttons;
 
 type
   TMedicamentoView = class(TFRMCrudBase)
@@ -46,7 +47,11 @@ type
     MEDPreco: TMaskEdit;
 
     CBFabricante: TComboBox;
+    LBAdicionarReacaoAdversa: TLabel;
+    EDTReacaoAdversaId: TEdit;
+    BBAdicionarReacaoAdversa: TBitBtn;
 
+    procedure BBAdicionarReacaoAdversaClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
     FViewModel: IMedicamentoViewModel;
@@ -58,6 +63,8 @@ type
     procedure AtualizarCompontensVisuais;
     procedure AtualizarEntidade;
     procedure AtualizarFabricantes;
+    procedure AtualizarReacoesAdversas;
+    function JaExisteNoDataSet(const ReacaoAdversaId: Integer): Boolean;
   end;
 
 var
@@ -73,6 +80,7 @@ begin
 
   FViewModel.AtualizarComponentesVisuas := AtualizarCompontensVisuais;
   FViewModel.AtualizarEntidades := AtualizarEntidade;
+  FViewModel.AtualizarReacaoAdversa := AtualizarReacoesAdversas;
 end;
 
 { TMedicamentoView }
@@ -91,6 +99,7 @@ begin
   MEDPreco.Text := FViewModel.Preco.ToString;
 
   AtualizarFabricantes;
+  AtualizarReacoesAdversas;
 end;
 
 procedure TMedicamentoView.AtualizarFabricantes;
@@ -106,6 +115,40 @@ begin
   CBFabricante.ItemIndex := FViewModel.RetornarIndiceDoFabricante;
 end;
 
+procedure TMedicamentoView.AtualizarReacoesAdversas;
+var
+  ReacaoMedicamentoItem: TReacaoMedicamentoItem;
+begin
+  CDSReacoesAdversas.Open;
+
+  for ReacaoMedicamentoItem in FViewModel.ReacoesAdversas do
+  begin
+    if JaExisteNoDataSet(ReacaoMedicamentoItem.ReacaoAdversaId) then
+      Continue;
+
+    CDSReacoesAdversas.Append;
+    CDSReacoesAdversasCodigo.AsInteger := ReacaoMedicamentoItem.ReacaoAdversa.Codigo;
+    CDSReacoesAdversasDescricao.AsString := ReacaoMedicamentoItem.ReacaoAdversa.Descricao;
+    CDSReacoesAdversas.Post;
+  end;
+
+end;
+
+function TMedicamentoView.JaExisteNoDataSet(const ReacaoAdversaId: Integer): Boolean;
+begin
+  CDSReacoesAdversas.First;
+
+  while not CDSReacoesAdversas.Eof do
+  begin
+    if CDSReacoesAdversasCodigo.AsInteger = ReacaoAdversaId then
+      Exit(True);
+
+    CDSReacoesAdversas.Next;
+  end;
+
+  Result := False;
+end;
+
 procedure TMedicamentoView.AtualizarEntidade;
 begin
   FViewModel.Nome := EDTNome.Text;
@@ -116,6 +159,15 @@ begin
   FViewModel.Preco := string(MEDPreco.Text).ToDouble;
 
   FViewModel.Fabricante := TFabricante(CBFabricante.Items.Objects[CBFabricante.ItemIndex]);
+end;
+
+procedure TMedicamentoView.BBAdicionarReacaoAdversaClick(Sender: TObject);
+var
+  ReacaoAdversaId: Integer;
+begin
+  ReacaoAdversaId := string(EDTReacaoAdversaId.Text).ToInteger;
+
+  FViewModel.AdicionarReacaoAdversa(ReacaoAdversaId);
 end;
 
 procedure TMedicamentoView.CarregarRegistro;

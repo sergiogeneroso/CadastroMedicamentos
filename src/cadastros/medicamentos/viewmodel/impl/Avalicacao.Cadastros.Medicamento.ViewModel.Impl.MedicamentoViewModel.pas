@@ -3,7 +3,7 @@ unit Avalicacao.Cadastros.Medicamento.ViewModel.Impl.MedicamentoViewModel;
 interface
 
 uses
-  System.Generics.Collections,
+  System.Generics.Collections, System.SysUtils,
 
   Avaliacao.CrudBase.ModoCrud,
 
@@ -11,6 +11,9 @@ uses
   Avalicacao.Cadastros.Fabricante.Model.Entity.Impl.Fabricante,
   Avalicacao.Cadastros.Fabricante.Model.Repository.FabricanteRepository,
   Avalicacao.Cadastros.Fabricante.Model.Repository.Impl.FabricanteRepository,
+
+  Avalicacao.Cadastros.ReacoesAdversas.Model.Repository.ReacoesAdversasRepository,
+  Avalicacao.Cadastros.ReacoesAdversas.Model.Repository.Impl.ReacoesAdversasRepository,
 
   Avalicacao.Cadastros.Medicamento.Model.Entity.Impl.ReacaoMedicamentoItem,
 
@@ -27,9 +30,11 @@ type
     FEntity: IMedicamento;
     FMedicamentoRepository: IMedicamentoRepository;
     FFabricanteRepository: IFabricanteRepository;
+    FReacoesAdversasRepository: IReacoesAdversasRepository;
 
     FAtualizarComponentesVisuas: TEventAtualizarComponentesVisuas;
     FAtualizarEntidades: TEventAtualizarEntidades;
+    FAtualizarReacaoAdversa: TEventAtualizarReacaoAdversa;
 
     function GetCodigo: Integer;
     function GetNome: string;
@@ -43,6 +48,7 @@ type
     function GetAtualizarComponentesVisuas: TEventAtualizarComponentesVisuas;
     function GetAtualizarEntidades: TEventAtualizarEntidades;
     function GetFabricantesDisponiveis: TList<TFabricante>;
+    function GetAtualizarReacaoAdversa: TEventAtualizarEntidades;
 
     procedure SetCodigo(const Value: Integer);
     procedure SetNome(const Value: string);
@@ -55,6 +61,8 @@ type
     procedure SetRegistroAnvisa(const Value: string);
     procedure SetTelefoneSac(const Value: string);
     procedure SetValidade(const Value: TDate);
+    procedure SetAtualizarReacaoAdversa(const Value: TEventAtualizarEntidades);
+    procedure ValidaSeJaEstaAdicionadaALista(const ReacaoAdversaId: Integer);
   public
     constructor Create;
 
@@ -63,6 +71,8 @@ type
     procedure CarregarRegistro;
 
     function RetornarIndiceDoFabricante: Integer;
+
+    procedure AdicionarReacaoAdversa(const ReacaoAdversaId: Integer);
 
     property Codigo: Integer read GetCodigo write SetCodigo;
     property Fabricante: IFabricante read GetFabricante write SetFabricante;
@@ -77,6 +87,7 @@ type
 
     property AtualizarComponentesVisuas: TEventAtualizarComponentesVisuas read GetAtualizarComponentesVisuas write SetAtualizarComponentesVisuas;
     property AtualizarEntidades: TEventAtualizarEntidades read GetAtualizarEntidades write SetAtualizarEntidades;
+    property AtualizarReacaoAdversa: TEventAtualizarEntidades read GetAtualizarReacaoAdversa write SetAtualizarReacaoAdversa;
   end;
 
 implementation
@@ -87,8 +98,36 @@ constructor TMedicamentoViewModel.Create;
 begin
   FMedicamentoRepository := TMedicamentoRepository.Create;
   FFabricanteRepository := TFabricanteRepository.Create;
+  FReacoesAdversasRepository := TReacoesAdversasRepository.Create;
 
   CarregarRegistro;
+end;
+
+procedure TMedicamentoViewModel.AdicionarReacaoAdversa(const ReacaoAdversaId: Integer);
+var
+  ReacaoMedicamentoItem: TReacaoMedicamentoItem;
+begin
+  ValidaSeJaEstaAdicionadaALista(ReacaoAdversaId);
+
+  ReacaoMedicamentoItem := TReacaoMedicamentoItem.Create;
+  ReacaoMedicamentoItem.ReacaoAdversa := FReacoesAdversasRepository.RetornarPorCodigo(ReacaoAdversaId);
+  ReacaoMedicamentoItem.ReacaoAdversaId := ReacaoMedicamentoItem.ReacaoAdversa.Codigo;
+  ReacaoMedicamentoItem.MedicamentoId := FEntity.Codigo;
+
+  FEntity.ReacoesAdversas.Add(ReacaoMedicamentoItem);
+
+  if Assigned(FAtualizarReacaoAdversa) then
+    FAtualizarReacaoAdversa;
+
+end;
+
+procedure TMedicamentoViewModel.ValidaSeJaEstaAdicionadaALista(const ReacaoAdversaId: Integer);
+var
+  ReacaoMedicamentoItem: TReacaoMedicamentoItem;
+begin
+  for ReacaoMedicamentoItem in FEntity.ReacoesAdversas do
+    if ReacaoMedicamentoItem.ReacaoAdversaId = ReacaoAdversaId then
+      raise Exception.Create('Reação já adicionada na lista!');
 end;
 
 procedure TMedicamentoViewModel.CarregarRegistro;
@@ -122,6 +161,11 @@ end;
 function TMedicamentoViewModel.GetAtualizarEntidades: TEventAtualizarEntidades;
 begin
   Result := FAtualizarEntidades;
+end;
+
+function TMedicamentoViewModel.GetAtualizarReacaoAdversa: TEventAtualizarEntidades;
+begin
+  Result := FAtualizarReacaoAdversa;
 end;
 
 function TMedicamentoViewModel.GetCodigo: Integer;
@@ -209,6 +253,11 @@ end;
 procedure TMedicamentoViewModel.SetAtualizarEntidades(const Value: TEventAtualizarEntidades);
 begin
   FAtualizarEntidades := Value;
+end;
+
+procedure TMedicamentoViewModel.SetAtualizarReacaoAdversa(const Value: TEventAtualizarEntidades);
+begin
+  FAtualizarReacaoAdversa := Value;
 end;
 
 procedure TMedicamentoViewModel.SetCodigo(const Value: Integer);

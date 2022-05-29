@@ -23,6 +23,7 @@ type
     FReacoesAdversasRepository: IReacoesAdversasRepository;
 
     function RetornaIdsReacoesAdversas(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>): string;
+    procedure AdicionarReacoesAdversas(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>);
   public
     constructor Create;
 
@@ -86,13 +87,22 @@ begin
 
     ReacaoMedicamentoItem.Codigo := FConexao.Query.Fields[CODIGO].AsInteger;
     ReacaoMedicamentoItem.MedicamentoId := FConexao.Query.Fields[MEDICAMENTO_ID].AsInteger;
-    ReacaoAdversaId := FConexao.Query.Fields[REACOES_ADVERSAS_ID].AsInteger;
-
-    ReacaoMedicamentoItem.ReacaoAdversa := FReacoesAdversasRepository.RetornarPorCodigo(ReacaoAdversaId);
+    ReacaoMedicamentoItem.ReacaoAdversaId := FConexao.Query.Fields[REACOES_ADVERSAS_ID].AsInteger;
 
     Result.Add(ReacaoMedicamentoItem);
+
     FConexao.Query.Next;
   end;
+
+  AdicionarReacoesAdversas(Result);
+end;
+
+procedure TReacaoMedicamentoItemRepository.AdicionarReacoesAdversas(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>);
+var
+  ReacaoMedicamentoItem: TReacaoMedicamentoItem;
+begin
+  for ReacaoMedicamentoItem in ReacoesMedicamentoItem do
+    ReacaoMedicamentoItem.ReacaoAdversa := FReacoesAdversasRepository.RetornarPorCodigo(ReacaoMedicamentoItem.ReacaoAdversaId);
 end;
 
 procedure TReacaoMedicamentoItemRepository.Cadastrar(const ReacoesMedicamentoItem: TList<TReacaoMedicamentoItem>);
@@ -100,7 +110,7 @@ const
   SQL_INSERT = 'INSERT INTO REACOES_MEDICAMENTOS (MEDICAMENTO_ID, REACOES_ADVERSAS_ID) VALUES (:medicamentoId, :reacoesAdversasId);';
 var
   ReacaoMedicamento: TReacaoMedicamentoItem;
-begin
+begin // Update or insert por id
   for ReacaoMedicamento in ReacoesMedicamentoItem do
     FConexao.Query.ExecSQL(SQL_INSERT, [ReacaoMedicamento.MedicamentoId, ReacaoMedicamento.ReacaoAdversa.Codigo]);
 

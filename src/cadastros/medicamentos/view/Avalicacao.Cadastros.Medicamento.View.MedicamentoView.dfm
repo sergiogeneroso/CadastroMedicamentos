@@ -89,6 +89,14 @@ object MedicamentoView: TMedicamentoView
         Alignment = taRightJustify
         Caption = 'Fabricante:'
       end
+      object LBAdicionarReacaoAdversa: TLabel
+        Left = 27
+        Top = 336
+        Width = 185
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Adicionar Rea'#231#227'o Adversa por Codigo:'
+      end
       object EDTCodigo: TEdit
         Left = 88
         Top = 24
@@ -162,7 +170,7 @@ object MedicamentoView: TMedicamentoView
       end
       object GBReacoesAdversas: TGroupBox
         Left = 22
-        Top = 336
+        Top = 360
         Width = 547
         Height = 121
         Caption = 'Rea'#231#245'es Adversas'
@@ -190,15 +198,38 @@ object MedicamentoView: TMedicamentoView
             item
               Expanded = False
               FieldName = 'Descricao'
+              ReadOnly = True
               Title.Caption = 'DESCRI'#199#195'O'
-              Width = 456
+              Width = 440
               Visible = True
             end>
         end
       end
+      object EDTReacaoAdversaId: TEdit
+        Left = 218
+        Top = 333
+        Width = 47
+        Height = 21
+        NumbersOnly = True
+        TabOrder = 9
+      end
+      object BBAdicionarReacaoAdversa: TBitBtn
+        Left = 283
+        Top = 331
+        Width = 75
+        Height = 25
+        Caption = 'Adicionar'
+        TabOrder = 10
+        OnClick = BBAdicionarReacaoAdversaClick
+      end
     end
   end
   object CDSReacoesAdversas: TClientDataSet
+    PersistDataPacket.Data = {
+      470000009619E0BD010000001800000002000000000003000000470006436F64
+      69676F04000100000000000944657363726963616F0100490000000100055749
+      4454480200020014000000}
+    Active = True
     Aggregates = <>
     Params = <>
     Left = 428

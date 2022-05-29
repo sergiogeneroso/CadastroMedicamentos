@@ -12,6 +12,7 @@ type
   private
     FCodigo: Integer;
     FMedicamentoId: Integer;
+    FReacaoAdversaId: Integer;
     FReacaoAdversa: IReacoesAdversas;
 
     function GetCodigo: Integer;
@@ -21,9 +22,12 @@ type
     procedure SetCodigo(const Value: Integer);
     procedure SetMedicamentoId(const Value: Integer);
     procedure SetReacaoAdversa(const Value: IReacoesAdversas);
+    function GetReacaoAdversaId: Integer;
+    procedure SetReacaoAdversaId(const Value: Integer);
   public
     property Codigo: Integer read GetCodigo write SetCodigo;
     property MedicamentoId: Integer read GetMedicamentoId write SetMedicamentoId;
+    property ReacaoAdversaId: Integer read GetReacaoAdversaId write SetReacaoAdversaId;
     property ReacaoAdversa: IReacoesAdversas read GetReacaoAdversa write SetReacaoAdversa;
   end;
 
@@ -46,6 +50,11 @@ begin
   Result := FReacaoAdversa;
 end;
 
+function TReacaoMedicamentoItem.GetReacaoAdversaId: Integer;
+begin
+  Result := FReacaoAdversaId;
+end;
+
 procedure TReacaoMedicamentoItem.SetCodigo(const Value: Integer);
 begin
   FCodigo := Value;
@@ -59,6 +68,11 @@ end;
 procedure TReacaoMedicamentoItem.SetReacaoAdversa(const Value: IReacoesAdversas);
 begin
   FReacaoAdversa := Value;
+end;
+
+procedure TReacaoMedicamentoItem.SetReacaoAdversaId(const Value: Integer);
+begin
+  FReacaoAdversaId := Value;
 end;
 
 end.
